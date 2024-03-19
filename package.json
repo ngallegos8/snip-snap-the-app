@@ -1,0 +1,21 @@
+{
+  "name": "electronapp",
+  "version": "1.0.0",
+  "description": "clipboard app",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "dev:watch": "npx electronmon --trace-warnings ."
+  },
+  "keywords": [
+    "electron",
+    "reactjs",
+    "python"
+  ],
+  "author": "Nicholas Gallegos",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^29.1.4"
+  }
+}
