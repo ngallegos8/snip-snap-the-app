@@ -70,7 +70,7 @@ class Login(Resource):
         if user and user.authenticate(password):
             session["user_id"] = user.id
             logging.debug(f"User {username} authenticated successfully.")
-            return user.to_dict(), 200
+            return user.to_dict(rules=("-clipboarditems",)), 200
         else:
             logging.debug(f"Authentication failed for user {username}.")
             return "Invalid Credentials", 401

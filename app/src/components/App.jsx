@@ -12,7 +12,7 @@ function App() {
 
   useEffect(() => {
 
-    fetch("http://127.0.0.1:5000/check_session").then((r) => {
+    fetch("/check_session").then((r) => {
       // console.log(r)
       if (r.ok) {
         r.json().then((user) => setUser(user));
