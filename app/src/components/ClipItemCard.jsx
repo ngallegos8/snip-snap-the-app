@@ -7,6 +7,7 @@ function ClipItemCard({ key, clipItem, deleteClipItem }) {
     
     return (
       <div className="clipitemcard-component">
+        <h4>ClipItemCard</h4>
 
       </div>
     )

@@ -7,6 +7,7 @@ function DisplayPreview () {
     
     return (
       <div className="displaypreview-component">
+        <h4>DisplayPreview</h4>
 
       </div>
     )

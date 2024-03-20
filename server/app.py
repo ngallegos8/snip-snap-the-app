@@ -145,9 +145,7 @@ api.add_resource(getOneUser, '/users/<id>')
 class getAllClipboardItems(Resource):
     def get(self):
         clipboarditems = ClipboardItem.query.all()
-        # return [clipboarditem.to_dict() for clipboarditem in clipboarditems], 200
         return [clipboarditem.to_dict(only=("content", "user_id")) for clipboarditem in clipboarditems], 200
-        # return [clipboarditem.to_dict(rules=('-users.clipboarditems', '-tag_clipboarditems.clipboarditem_tags')) for clipboarditem in clipboarditems], 200
     
     def post(self):
         try:

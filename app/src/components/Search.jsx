@@ -5,7 +5,7 @@ function Search({ search, setSearch }) {
 
   return (
     <div className="searchbar">
-      <label htmlFor="search">Search:</label>
+      <label htmlFor="search">Search: </label>
         <input
         type="text"
         id="search"

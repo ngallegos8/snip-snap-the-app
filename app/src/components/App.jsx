@@ -28,9 +28,9 @@ function App() {
     <BrowserRouter>
       {/* <NavBar /> */}
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login onLogin={setUser}/>} />
-        <Route path="/signup" element={<Signup />} />
+        {/* <Route path="/" element={<Home />} /> */}
+        <Route path="/" element={<Login onLogin={setUser}/>} />
+        <Route path="/signup" element={<Signup onLogin={setUser}/>} />
         <Route path="/UserHome" element={<UserHome onLogin={user}/>} />
       
         {/* Add other routes as needed */}

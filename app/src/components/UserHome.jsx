@@ -32,12 +32,12 @@ console.log("hello")
 
     // const displayedClipItems = clipItems.filter((clipItems) => clipItems.name.toLowerCase().includes(searchClipItems.toLowerCase()))
 
-    //    ALLOWS SEARCH FUNCTION TO SEARCH FOR ANY RATIONAL PARAMETER IN THE EVENT OBJECT
-    const displayedClipItems = clipItems.filter((clipItem) => {
-        console.log(clipItem)
-        return clipItem.content.toLowerCase().includes(searchClipItems.toLowerCase()) ||
-        clipItem.tag_clipboarditems.toLowerCase().includes(searchClipItems.toLowerCase())
-      })
+    // // //    ALLOWS SEARCH FUNCTION TO SEARCH FOR ANY RATIONAL PARAMETER IN THE EVENT OBJECT
+    // const displayedClipItems = clipItems.filter((clipItem) => {
+    //     console.log(clipItem)
+    //     return clipItem.content.toLowerCase().includes(searchClipItems.toLowerCase()) ||
+    //     clipItem.tag_clipboarditems.toLowerCase().includes(searchClipItems.toLowerCase())
+    //   })
 
     function handleLogout() {
         alert("See you next time!");
@@ -47,7 +47,7 @@ console.log("hello")
         .then(() => {
             setUser(null);
             // Redirect to the index page after logout
-            navigate("/login")
+            navigate("/")
         })
         .catch(error => {
             // Handle error if needed
@@ -60,11 +60,12 @@ console.log("hello")
             <div className="window">
 
                 <div className="finder">
-                    <Finder search={searchClipItems} setSearch={setSearchClipItems}/>
+                    <Finder search={searchClipItems} setSearch={setSearchClipItems} handleLogout={handleLogout}/>
                 </div>
 
                 <div className="explorer">
-                    <Explorer clipItems={displayedClipItems} deleteClipItem={deleteClipItem}/>
+                    {/* <Explorer clipItems={displayedClipItems} deleteClipItem={deleteClipItem}/> */}
+                    <Explorer  deleteClipItem={deleteClipItem}/>
                 </div>
 
             </div>

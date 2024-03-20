@@ -7,6 +7,7 @@ function Controls () {
     
     return (
       <div className="controls-component">
+        <h4>Controls</h4>
 
       </div>
     )

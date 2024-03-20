@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 
 function UserLogin( {onLogin}) {
+    const [user, setUser] = useState(null);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
@@ -12,7 +13,6 @@ function UserLogin( {onLogin}) {
     const [isLoading, setIsLoading] = useState(false);
     // const history = useHistory()
     const navigate = useNavigate();
-    const [user, setUser] = useState(null);
 
 
     useEffect(() => {
@@ -58,14 +58,19 @@ function UserLogin( {onLogin}) {
           <div className="header-top"></div>
             <form onSubmit={handleSubmit}>
               <h1 className="form-title">Log in to Snip-Snap</h1>
-              <p className='user-signup-link'>Sign Up Instead <Link to="/signup">Sign up</Link></p>
-                <label>Enter Username</label>
+
+                <label>Enter Username </label>
                 <input value={username} onChange={(e) => setUsername(e.target.value)}></input>
-                <label>Enter Password</label>
+
+                <label>Enter Password </label>
                 <input value={password} onChange={(e) => setPassword(e.target.value)}></input>
-                <label>Enter Email</label>
+                
+                <label>Enter Email </label>
                 <input value={email} onChange={(e) => setEmail(e.target.value)}></input>
+                
               <button type="submit">Log In</button>
+
+              <p className='user-signup-link'>Sign Up Instead <Link to="/signup">Sign up</Link></p>
             </form>
           </div>
       );

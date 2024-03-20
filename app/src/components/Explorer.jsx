@@ -12,6 +12,7 @@ function Explorer({ clipItems, deleteClipItem }) {
     
     return (
         <div className="explorer-component">
+            <h1>Explorer</h1>
 
             <div className="clipitemlist">
                 <ClipItemList clipItems={clipItems} deleteClipItem={deleteClipItem} />
