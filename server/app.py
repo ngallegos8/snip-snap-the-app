@@ -17,6 +17,10 @@ app.secret_key = b'\tG\xfc1\x97\xc1(\xfc\xfb\x17\xf3\xf9T\xff\xeb\xb0'
 # Add your model imports
 from models import db, User, ClipboardItem, Tag, ClipboardItemTag
 
+import logging
+logging.basicConfig(level=logging.DEBUG)
+app.debug = True
+
 
 # Views go here!
 @app.route('/')
@@ -53,17 +57,22 @@ api.add_resource(SignUp, '/signup')
 class Login(Resource):
     def post(self):
         form_json = request.get_json()
-        username_or_email = form_json["username_or_email"]
+        logging.debug(f"Received login request: {form_json}")
+
+        username = form_json["username"]
         password = form_json["password"]
+        email = form_json["email"]
         
         user = User.query.filter(
-            (User.username == username_or_email) | (User.email == username_or_email)
+            (User.username == username) | (User.email == email)
         ).first()
         
         if user and user.authenticate(password):
             session["user_id"] = user.id
+            logging.debug(f"User {username} authenticated successfully.")
             return user.to_dict(), 200
         else:
+            logging.debug(f"Authentication failed for user {username}.")
             return "Invalid Credentials", 401
 
 api.add_resource(Login, "/login")
@@ -84,7 +93,7 @@ class CheckSession(Resource):
 
         if user_id:
             user = User.query.filter(User.id == user_id).first()
-            return user.to_dict(), 200
+            return user.to_dict(rules=('-clipboard_items.user',)), 200
         return {}, 401
     
 api.add_resource(CheckSession, "/check_session")

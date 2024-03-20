@@ -6,10 +6,8 @@ function Home() {
         <div>
             <h1>Welcome to View Party!</h1>
             <h2>I am a </h2>
-            <Link to="/signup/user"> <button >User</button> </Link><p></p>
-            <Link to="/signup/venue">   <button>Vender</button>    </Link>
-            <Link to="/login/user"> <button >User Login</button> </Link><p></p>
-            <Link to="/login/venue">   <button>Vender Login</button>    </Link>
+            <Link to="/signup"> <button >Sign Up</button> </Link><p></p>
+            <Link to="/login"> <button >User Login</button> </Link><p></p>
         </div>
     );
 };

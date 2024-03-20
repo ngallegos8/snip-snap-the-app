@@ -1,7 +1,5 @@
 import React, {useState, useEffect } from "react";
-import NewEventForm from "./NewEventForm";
-import EventList from "./EventList";
-import Search from "./Search";
+// import Search from "./Search";
 // Need to import user (object) info from "./userLogin" after login is successful
 
 function UserHome() {
@@ -50,9 +48,9 @@ function UserHome() {
     return(
         <main>
             <h1>user page</h1>
-            <NewEventForm> onNewEventFormSubmit={handleNewEventFormSubmit}</NewEventForm>
-            <Search> search={searchEvents} setSearch={setSearchEvents} </Search>
-            <EventList> events={displayedEvents} removeEvent={removeEvent} updateEvent={handleUpdateEvent}</EventList>
+
+            {/* <Search> search={searchEvents} setSearch={setSearchEvents} </Search> */}
+            
         </main>
     );
 }

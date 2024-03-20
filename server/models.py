@@ -4,11 +4,11 @@ from sqlalchemy import MetaData
 #5 )pip install flask_bcrypt and import bcrypt and wrap the app in bcrypt, import hybrid property
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
-from flask_bcrypt import Bcrypt
 from datetime import datetime
 
+from flask_bcrypt import Bcrypt
+
 bcrypt = Bcrypt()
-from datetime import datetime
 
 metadata = MetaData(naming_convention={
     "ix": "ix_%(column_0_label)s",
@@ -19,10 +19,6 @@ metadata = MetaData(naming_convention={
     })
 
 db = SQLAlchemy(metadata=metadata)
-
-# app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-# db = SQLAlchemy(app)
 
 
 
@@ -51,6 +47,7 @@ class User(db.Model, SerializerMixin):
     #6.3 Create an authentication method to check the password using bcrypt
     def authenticate(self, password):
         return bcrypt.check_password_hash(self.password_hash, password.encode("utf-8"))
+    
 
     # #  VALIDATIONS
     # @validates('username')
@@ -62,6 +59,14 @@ class User(db.Model, SerializerMixin):
 
     # Add relationship
     clipboarditems = db.relationship('ClipboardItem', back_populates = "users")
+    
+    # def to_dict(self):
+    #     return {
+    #         'id': self.id,
+    #         'username': self.username,
+    #         'email': self.email,
+    #         'clipboarditems': [clipboarditem.to_dict() for clipboarditem in self.clipboarditems.all()]
+    #     }
     
     # Add serialization rules
     serialize_rules = ('-clipboarditems.users',)
@@ -78,12 +83,24 @@ class ClipboardItem(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
+
     # Correct the back_populates attribute to match the relationship name in ClipboardItemTag
     users = db.relationship('User', back_populates='clipboarditems')
     tag_clipboarditems = db.relationship('Tag', secondary='clipboarditemtags', back_populates='clipboarditem_tags')
+    
+    # def to_dict(self):
+    #     return {
+    #         'id': self.id,
+    #         'content': self.content,
+    #         'user_id': self.user_id,
+    #         'created_at': self.created_at.isoformat(),
+    #         'updated_at': self.updated_at.isoformat(),
+    #         # Exclude the user field to avoid circular reference
+    #     }
+
 
     # Add serialization rules
-    serialize_rules = ('-user.clipboarditems', '-tags.clipboarditems')
+    serialize_rules = ('-users.clipboarditems', '-tag_clipboarditems.clipboarditem_tags')
 
 
 
@@ -94,11 +111,20 @@ class Tag(db.Model, SerializerMixin):
     name = db.Column(db.String(50), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
+
     # Correct the back_populates attribute to match the relationship name in ClipboardItemTag
     clipboarditem_tags = db.relationship('ClipboardItem', secondary='clipboarditemtags', back_populates='tag_clipboarditems')
+    
+    # def to_dict(self):
+    #     return {
+    #         'id': self.id,
+    #         'name': self.name,
+    #         'user_id': self.user_id,
+    #         # Exclude the clipboarditems field to avoid circular reference
+    #     }
 
     # Add serialization rules
-    serialize_rules = ('-clipboarditems.tags', )
+    serialize_rules = ('-clipboarditem_tags.tag_clipboarditems',)
 
 
 
@@ -110,9 +136,18 @@ class ClipboardItemTag(db.Model, SerializerMixin):
     clipboard_item_id = db.Column(db.Integer, db.ForeignKey('clipboarditems.id'), nullable=False)
     tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'), nullable=False)
 
+
     # Ensure the relationship names are correctly defined
     clipboarditem = db.relationship('ClipboardItem', backref='clipboarditem_tags')
     tag = db.relationship('Tag', backref='tag_clipboarditems')
 
+    # def to_dict(self):
+    #     return {
+    #         'id': self.id,
+    #         'clipboard_item_id': self.clipboard_item_id,
+    #         'tag_id': self.tag_id,
+    #         # Exclude the clipboarditem and tag fields to avoid circular references
+    #     }
+    
     # Add serialization rules
-    serialize_rules = ('-clipboarditem.tags', '-tag.clipboarditems')
+    serialize_rules = ('-clipboarditem.clipboarditem_tags', '-tag.tag_clipboarditems')

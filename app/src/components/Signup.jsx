@@ -6,7 +6,7 @@ function Signup() {
     const [password, setPassword] = useState("")
 
     useEffect(() => {
-        fetch("/check_session").then((r) => {
+        fetch("/http://127.0.0.1:5000check_session").then((r) => {
             if (r.ok) {
                 r.json()
                 .then((user) => setUser(user))

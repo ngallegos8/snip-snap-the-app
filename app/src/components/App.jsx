@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Switch, Route, Routes, createBrowserRoute, RouterProvider, BrowserRouter } from "react-router-dom";
 import NavBar from './Navbar'
-import User from './UserHome'
+import UserHome from './UserHome'
 import Signup from'./Signup'
 import Home from './Home'
-import UserLogin from './Login'
+import Login from './Login'
 
 
 function App() {
@@ -12,60 +12,29 @@ function App() {
 
   useEffect(() => {
 
-    fetch("/check_session").then((r) => {
+    fetch("http://127.0.0.1:5000/check_session").then((r) => {
+      // console.log(r)
       if (r.ok) {
         r.json().then((user) => setUser(user));
       }
     });
   }, []);
 
-  if (!user) return <UserLogin onLogin={setUser} />;
+  if (!user) return <Login onLogin={setUser} />;
 
- 
-  return(
+
+
+  return (
     <BrowserRouter>
-      <NavBar/>
-  
-    
-          <Switch>
-          <Route path="/">
-            <Home/>
-          </Route>
-          <Route exact path="/User">
-            <User/>
-          </Route>
-          <Route exact path="/Venue">
-            <Venue/>
-          </Route>
-          <Route exact path="/Event">
-            <Event />
-          </Route>
-          <Route exact path="/signup/user">
-            <Signup />
-          </Route>
-          <Route exact path="/signup/venue">
-            <VenueSignup />
-          </Route>
-          <Route exact path="/login/user">
-            <UserLogin onLogin={setUser}/>
-          </Route>
-          <Route exact path="/login/venue">
-            <VenueLogin onLogin={setVenue}/>
-          </Route>
-          <Route exact path="/UserHome">
-            <UserHome />
-          </Route>
-          <Route exact path="/VenueHome">
-            <VenueHome />
-          </Route>
-          </Switch>
-     
-        
-
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        {/* <Route path="/UserHome" element={<UserHome />} /> */}
+      
+        {/* Add other routes as needed */}
+      </Routes>
     </BrowserRouter>
-
-
-  );
+ );
 
 }
 
