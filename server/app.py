@@ -104,7 +104,7 @@ class getOneUser(Resource):
     def get(self,id):
         user = User.query.filter(User.id == id).first()
         if(user):
-            return user.to_dict(), 200
+            return user.to_dict(rules=("-clipboarditems",)), 200
         else:
             return {
                 "error": "User not found"
@@ -119,7 +119,7 @@ class getOneUser(Resource):
                     setattr(user, key, data[key])
                 db.session.add(user)
                 db.session.commit()
-                return user.to_dict(), 202
+                return user.to_dict(rules=("-clipboarditems",)), 202
             except Exception as e:
                 print(e)
                 return {"errors": ["validation errors"]}, 400
@@ -145,7 +145,9 @@ api.add_resource(getOneUser, '/users/<id>')
 class getAllClipboardItems(Resource):
     def get(self):
         clipboarditems = ClipboardItem.query.all()
-        return [clipboarditems.to_dict(rules=('-users',)) for clipboarditem in clipboarditems], 200
+        # return [clipboarditem.to_dict() for clipboarditem in clipboarditems], 200
+        return [clipboarditem.to_dict(only=("content", "user_id")) for clipboarditem in clipboarditems], 200
+        # return [clipboarditem.to_dict(rules=('-users.clipboarditems', '-tag_clipboarditems.clipboarditem_tags')) for clipboarditem in clipboarditems], 200
     
     def post(self):
         try:
@@ -156,7 +158,7 @@ class getAllClipboardItems(Resource):
             )
             db.session.add(new_clipboard_item)
             db.session.commit()
-            return new_clipboard_item.to_dict(rules=("-users", )), 201
+            return new_clipboard_item.to_dict(), 201
         except Exception as e:
             print(e)
             return { "errors": ["validation errors"] }, 400
@@ -182,7 +184,7 @@ api.add_resource(getOneClipboardItem,'/clipboarditems/<id>')
 class getAllTags(Resource):
     def get(self):
         tags = Tag.query.all()
-        return [tags.to_dict() for tag in tags], 200
+        return [tag.to_dict(only=("name", "user_id")) for tag in tags], 200
     
     def post(self):
         try:
@@ -206,7 +208,7 @@ class getOneTag(Resource):
     def get(self,id):
         tag = Tag.query.filter(Tag.id == id).first()
         if(tag):
-            return tag.to_dict(), 200
+            return tag.to_dict(only=("name", "user_id")), 200
         else:
             return {
                 "error": "Tag not found"

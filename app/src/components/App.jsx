@@ -10,26 +10,28 @@ import Login from './Login'
 function App() {
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    fetch("/check_session").then((r) => {
-      // console.log(r)
-      if (r.ok) {
-        r.json().then((user) => setUser(user));
-      }
-    });
-  }, []);
+  //   fetch("/check_session").then((r) => {
+  //     // console.log(r)
+  //     if (r.ok) {
+  //       r.json().then((user) => setUser(user));
+  //     }
+  //   });
+  // }, []);
 
-  if (!user) return <Login onLogin={setUser} />;
+  // if (!user) return <Login onLogin={setUser} />;
 
 
 
   return (
     <BrowserRouter>
-      <NavBar />
+      {/* <NavBar /> */}
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* <Route path="/UserHome" element={<UserHome />} /> */}
+        <Route path="/login" element={<Login onLogin={setUser}/>} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/UserHome" element={<UserHome onLogin={user}/>} />
       
         {/* Add other routes as needed */}
       </Routes>

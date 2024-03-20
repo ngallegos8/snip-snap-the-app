@@ -7,18 +7,11 @@ function NavBar(){
             <Link to="/">  Home    </Link>
             
             <Link to="/User">  User    </Link>
-            
-            <Link to="/Event">  Event    </Link>
-            
-            <Link to="/Venue">  Venue    </Link>
 
-            <Link to="/signup/user">  Create Account    </Link>
+            <Link to="/signup"> Create Account </Link>
 
-            <Link to="/signup/venue">   Create Venue    </Link>
+            <Link to="/login"> Login  </Link>
 
-            <Link to="/login/user">  User Login    </Link>
-
-            <Link to="/login/venue">   Venue Login    </Link>
             
             
         </nav>

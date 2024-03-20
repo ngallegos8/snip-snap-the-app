@@ -11,7 +11,7 @@ function UserHome() {
     console.log(searchEvents)
 
     useEffect(() => {
-        fetch("http://127.0.0.1:5555/events")
+        fetch("http://127.0.0.1:5000/events")
           .then(response => response.json())
           .then(setEvents)
       }, [])
