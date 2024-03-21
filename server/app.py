@@ -3,8 +3,13 @@
 # Standard library imports
 
 # Remote library imports
-from flask import Flask, request, session, make_response
+from flask import Flask, Blueprint, request, session, make_response
 from flask_restful import Resource
+from flask_sqlalchemy import SQLAlchemy
+import base64
+import os
+
+bp = Blueprint('clipboard', __name__)
 
 # Local imports
 from config import app, api
@@ -177,6 +182,38 @@ class getOneClipboardItem(Resource):
             }, 404
         
 api.add_resource(getOneClipboardItem,'/clipboarditems/<id>')
+
+@app.route('/save_clipboard', methods=['POST'])
+def save_clipboard():
+    data = request.get_json()
+    if data is None:
+        return 'Bad Request', 400
+    content = data.get('content')
+    if content is None:
+        return 'Bad Request', 400
+    if content.startswith('data:image/png;base64,'):
+        # Handle image
+        image_data = content.split(',')[1]
+        image_bytes = base64.b64decode(image_data)
+        image_path = 'path/to/save/image.png'
+        with open(image_path, 'wb') as f:
+            f.write(image_bytes)
+    elif content.startswith('file://'):
+        # Handle file
+        file_url = content[7:]
+        file_path = NSURL.URLWithString_(file_url).path()
+        # Copy the file to your desired location
+        # This is a simplified example; you might want to handle errors and permissions
+        os.system(f'cp "{file_path}" /path/to/save/')
+    else:
+        # Handle text
+        new_content = ClipboardItem(content=content)
+        db.session.add(new_content)
+        db.session.commit()
+    return 'Content saved', 201
+
+
+
 
 
 class getAllTags(Resource):
