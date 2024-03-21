@@ -10,15 +10,15 @@ import Login from './Login'
 function App() {
   const [user, setUser] = useState(null);
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   fetch("/check_session").then((r) => {
-  //     // console.log(r)
-  //     if (r.ok) {
-  //       r.json().then((user) => setUser(user));
-  //     }
-  //   });
-  // }, []);
+    fetch("http://127.0.0.1:5000/check_session").then((r) => {
+      // console.log(r)
+      if (r.ok) {
+        r.json().then((user) => setUser(user));
+      }
+    });
+  }, []);
 
   // if (!user) return <Login onLogin={setUser} />;
 

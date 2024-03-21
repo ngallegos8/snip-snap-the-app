@@ -38,9 +38,10 @@ def index():
 def check_session():
     if session.get("user_id") is None:
         session["user_id"] = None
+        # print(session["user_id"])
     else:
         print("User is logged in")
-        print(session["user_id"])
+        # print(session["user_id"])
 
 
 class SignUp(Resource):
@@ -62,7 +63,7 @@ api.add_resource(SignUp, '/signup')
 class Login(Resource):
     def post(self):
         form_json = request.get_json()
-        logging.debug(f"Received login request: {form_json}")
+        # logging.debug(f"Received login request: {form_json}")
 
         username = form_json["username"]
         password = form_json["password"]
@@ -74,7 +75,8 @@ class Login(Resource):
         
         if user and user.authenticate(password):
             session["user_id"] = user.id
-            logging.debug(f"User {username} authenticated successfully.")
+            # logging.debug(f"Session data after setting user_id: {session.items()}")
+            # logging.debug(f"User {username} authenticated successfully.")
             return user.to_dict(rules=("-clipboarditems",)), 200
         else:
             logging.debug(f"Authentication failed for user {username}.")
@@ -98,6 +100,7 @@ class CheckSession(Resource):
 
         if user_id:
             user = User.query.filter(User.id == user_id).first()
+            session["user_id"] = user.id
             return user.to_dict(rules=('-clipboard_items.user',)), 200
         return {}, 401
     
@@ -154,6 +157,7 @@ class getAllClipboardItems(Resource):
     
     def post(self):
         try:
+            
             data= request.get_json()
             new_clipboard_item = ClipboardItem(
                 content = data['content'],
@@ -183,34 +187,178 @@ class getOneClipboardItem(Resource):
         
 api.add_resource(getOneClipboardItem,'/clipboarditems/<id>')
 
-@app.route('/save_clipboard', methods=['POST'])
-def save_clipboard():
-    data = request.get_json()
-    if data is None:
-        return 'Bad Request', 400
-    content = data.get('content')
-    if content is None:
-        return 'Bad Request', 400
-    if content.startswith('data:image/png;base64,'):
-        # Handle image
-        image_data = content.split(',')[1]
-        image_bytes = base64.b64decode(image_data)
-        image_path = 'path/to/save/image.png'
-        with open(image_path, 'wb') as f:
-            f.write(image_bytes)
-    elif content.startswith('file://'):
-        # Handle file
-        file_url = content[7:]
-        file_path = NSURL.URLWithString_(file_url).path()
-        # Copy the file to your desired location
-        # This is a simplified example; you might want to handle errors and permissions
-        os.system(f'cp "{file_path}" /path/to/save/')
-    else:
-        # Handle text
-        new_content = ClipboardItem(content=content)
-        db.session.add(new_content)
-        db.session.commit()
-    return 'Content saved', 201
+
+class SaveClipboard(Resource):
+    def post(self):
+        data = request.get_json()
+        # print(data)
+        # print(session["user_id"])
+        if data is None:
+            return 'Bad Request', 400
+        content = data.get('content')
+        if content is None:
+            return 'Bad Request', 400
+        # image
+        if content.startswith('data:image/png;base64,'):
+            image_data = content.split(',')[1]
+            image_bytes = base64.b64decode(image_data)
+            image_path = 'path/to/save/image.png'
+            with open(image_path, 'wb') as f:
+                f.write(image_bytes)
+        # file
+        elif content.startswith('file://'):
+            file_url = content[7:]
+            file_path = NSURL.URLWithString_(file_url).path()
+            os.system(f'cp "{file_path}" /path/to/save/')
+        # text
+        else:
+            new_content = ClipboardItem(content=content)
+            db.session.add(new_content)
+            db.session.commit()
+        return 'Content saved', 201
+
+api.add_resource(SaveClipboard, '/save_clipboard')
+
+
+
+# # # TRYING TO AUTO TAG ITEM BASED ON FILE TYPE
+# # # NEED TO FIGURE OUT HOW TO PASS SESSION INTO 'clipboard_monitor.py' TO BE ABLE TO SEND USER_ID IN THE JSON RESPONSE TO THIS ROUTE
+# class SaveClipboard(Resource):
+#     def post(self):
+#         data = request.get_json()
+#         print(data)
+#         if data is None:
+#             return 'Bad Request', 400
+#         content = data.get('content')
+#         filename = data.get('filename')
+#         if content is None and filename is None:
+#             return 'Bad Request', 400
+        
+#         if filename:
+#             content_type = "File"
+#         elif content.startswith('data:image/png;base64,'):
+#             content_type = "Image"
+#         else:
+#             content_type = "Text"
+        
+#         user_id = session['user_id']
+#         logging.debug(f"Session data: {session.items()}")
+#         logging.debug(f"User ID: {user_id}")
+#         if not user_id:
+#             return 'User not logged in', 401
+        
+#         tag = Tag.query.filter_by(name=content_type, user_id=user_id).first()
+#         if not tag:
+#             tag = Tag(name=content_type, user_id=user_id)
+#             db.session.add(tag)
+#             db.session.commit()
+        
+#         if content_type == "Image":
+#             image_data = content.split(',')[1]
+#             image_bytes = base64.b64decode(image_data)
+#             image_path = 'path/to/save/image.png'
+#             with open(image_path, 'wb') as f:
+#                 f.write(image_bytes)
+#         elif content_type == "File":
+#             file_url = content[7:]
+#             file_path = NSURL.URLWithString_(file_url).path()
+#             os.system(f'cp "{file_path}" /path/to/save/')
+#         else:
+#             new_content = ClipboardItem(content=content, tag_clipboarditems=[tag])
+#             db.session.add(new_content)
+#             db.session.commit()
+
+# api.add_resource(SaveClipboard, '/save_clipboard')
+
+
+# @app.route('/save_clipboard', methods=['POST'])
+# def save_clipboard():
+#     data = request.get_json()
+#     if data is None:
+#         return 'Bad Request', 400
+#     content = data.get('content')
+#     if content is None:
+#         return 'Bad Request', 400
+#     if content.startswith('data:image/png;base64,'):
+#         # Handle image
+#         image_data = content.split(',')[1]
+#         image_bytes = base64.b64decode(image_data)
+#         image_path = 'path/to/save/image.png'
+#         with open(image_path, 'wb') as f:
+#             f.write(image_bytes)
+#     elif content.startswith('file://'):
+#         # Handle file
+#         file_url = content[7:]
+#         file_path = NSURL.URLWithString_(file_url).path()
+#         # Copy the file to your desired location
+#         # This is a simplified example; you might want to handle errors and permissions
+#         os.system(f'cp "{file_path}" /path/to/save/')
+#     else:
+#         # Handle text
+#         new_content = ClipboardItem(content=content)
+#         db.session.add(new_content)
+#         db.session.commit()
+#     return 'Content saved', 201
+
+
+
+
+# # # TRYING TO AUTO TAG ITEM BASED ON FILE TYPE
+# @app.route('/save_clipboard', methods=['POST'])
+# def save_clipboard():
+    
+#     data = request.get_json()
+#     if data is None:
+#         return 'Bad Request', 400
+#     content = data.get('content')
+#     filename = data.get('filename') # Assuming filename is part of the JSON data
+#     if content is None and filename is None:
+#         return 'Bad Request', 400
+    
+#     # Determine the content type
+#     if filename:
+#         content_type = "File"
+#     elif content.startswith('data:image/png;base64,'):
+#         content_type = "Image"
+#     else:
+#         content_type = "Text"
+    
+#     # Find or create the tag based on the content type
+#     logging.debug(f"Session data: {session.items()}")
+#     user_id = session.get('user_id')
+#     logging.debug(f"User ID: {user_id}")
+#     if not user_id:
+#         return 'User not logged in', 401
+    
+#     tag = Tag.query.filter_by(name=content_type, user_id=user_id).first()
+#     if not tag:
+#         tag = Tag(name=content_type, user_id=user_id)
+#         db.session.add(tag)
+#         db.session.commit()
+    
+#     # Handle the content based on its type
+#     if content_type == "Image":
+#         # Handle image
+#         image_data = content.split(',')[1]
+#         image_bytes = base64.b64decode(image_data)
+#         image_path = 'path/to/save/image.png'
+#         with open(image_path, 'wb') as f:
+#             f.write(image_bytes)
+#     elif content_type == "File":
+#         # Handle file
+#         file_url = content[7:]
+#         file_path = NSURL.URLWithString_(file_url).path()
+#         # Copy the file to your desired location
+#         # This is a simplified example; you might want to handle errors and permissions
+#         os.system(f'cp "{file_path}" /path/to/save/')
+#     else:
+#         # Handle text
+#         new_content = ClipboardItem(content=content, tag_clipboarditems=[tag])
+#         db.session.add(new_content)
+#         db.session.commit()
+    
+#     return 'Content saved', 201
+
 
 
 
