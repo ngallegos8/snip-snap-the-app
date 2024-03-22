@@ -1,19 +1,19 @@
 import React from "react";
 import ClipItemCard from "./ClipItemCard";
 
-function ClipItemList({ clipboardItems, deleteClipboardItem}) {   
-  console.log(clipboardItems)
+function ClipItemList({ clipItems, deleteClipItem}) {   
+  console.log(clipItems)
 
-  const clipboardItemList = clipboardItems.map(clipboardItem => {
-    return <ClipItemCard key={clipboardItem.id} clipboardItem={clipboardItem} deleteClipboardItem={deleteClipboardItem} />  
-  })
- console.log(clipboardItemList)
+//   const clipItemList = clipItems.map(clipItem => {
+//     return <ClipItemCard key={clipItem.id} clipItem={clipItem} deleteClipItem={deleteClipItem} />  
+//   })
+//  console.log(clipItemList)
 
   return (
       <>
         <ul className="clipitemlist-component">
-            <h3>ClipboardItemList</h3>
-            {clipboardItemList}
+            <h3>ClipItemList</h3>
+            {/* {clipItemList} */}
         </ul>
       </>
   );
