@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 
 
-function ClipItemCard({ key, clipItem, deleteClipItem }) {
+function ClipItemCard({ key, clipboardItem, deleteClipboardItem }) {
     
 
     
     return (
       <div className="clipitemcard-component">
-        <h4>ClipItemCard</h4>
+        {clipboardItem.content}
+        <button className="remove-clipboarditem" onClick={deleteClipboardItem}>Delete</button>
 
       </div>
     )
