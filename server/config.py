@@ -5,7 +5,9 @@ from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 
+# from models import db
 from models import db
+# from server.models import db
 
 # Instantiate app, set attributes
 app = Flask(__name__)

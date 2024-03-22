@@ -13,6 +13,9 @@ bp = Blueprint('clipboard', __name__)
 
 # Local imports
 from config import app, api
+# from server.config import app, api
+
+
 #) ✅ python -c 'import os; print(os.urandom(16))'
 #) Used to hash the session data
 # app.secret_key = b'*\x10\x1eI~\n=\xe6\x92\xb4N\xe1\x94\x8b\xea\xb8'
@@ -20,7 +23,9 @@ app.secret_key = b'\tG\xfc1\x97\xc1(\xfc\xfb\x17\xf3\xf9T\xff\xeb\xb0'
 
 
 # Add your model imports
+# from models import db
 from models import db, User, ClipboardItem, Tag, ClipboardItemTag
+# from server.models import db
 
 import logging
 logging.basicConfig(level=logging.DEBUG)
@@ -153,7 +158,10 @@ api.add_resource(getOneUser, '/users/<id>')
 class getAllClipboardItems(Resource):
     def get(self):
         clipboarditems = ClipboardItem.query.all()
-        return [clipboarditem.to_dict(only=("content", "user_id")) for clipboarditem in clipboarditems], 200
+        # return [clipboarditem.to_dict(only=("content", "user_id")) for clipboarditem in clipboarditems], 200
+        return [clipboarditem.to_dict(only=("content", )) for clipboarditem in clipboarditems], 200
+        # return [clipboarditem.to_dict(only=("content","-tag_clipboarditems")) for clipboarditem in clipboarditems], 200
+        # return [clipboarditem.to_dict(rules=("-tag_clipboarditems", )) for clipboarditem in clipboarditems], 200
     
     def post(self):
         try:

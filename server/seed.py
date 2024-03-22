@@ -1,5 +1,7 @@
 from app import app 
 from models import db, User, ClipboardItem, Tag, ClipboardItemTag
+# from server.app import app 
+# from server.models import db, User, ClipboardItem, Tag, ClipboardItemTag
 from datetime import datetime
 
 with app.app_context():
