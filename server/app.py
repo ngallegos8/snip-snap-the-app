@@ -6,6 +6,7 @@
 from flask import Flask, Blueprint, request, session, make_response
 from flask_restful import Resource
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 import base64
 import os
 
@@ -14,6 +15,7 @@ bp = Blueprint('clipboard', __name__)
 # Local imports
 from config import app, api
 # from server.config import app, api
+CORS(app)
 
 
 #) ✅ python -c 'import os; print(os.urandom(16))'
@@ -152,14 +154,15 @@ class getOneUser(Resource):
                 "error": "User not found"
             }, 404
         
-api.add_resource(getOneUser, '/users/<id>')
+api.add_resource(getOneUser, '/users/<int:id>')
 
 
 class getAllClipboardItems(Resource):
     def get(self):
         clipboarditems = ClipboardItem.query.all()
         # return [clipboarditem.to_dict(only=("content", "user_id")) for clipboarditem in clipboarditems], 200
-        return [clipboarditem.to_dict(only=("content", )) for clipboarditem in clipboarditems], 200
+        # return [clipboarditem.to_dict(only=("content", )) for clipboarditem in clipboarditems], 200
+        return [clipboarditem.to_dict(only=("content", "id")) for clipboarditem in clipboarditems], 200
         # return [clipboarditem.to_dict(only=("content","-tag_clipboarditems")) for clipboarditem in clipboarditems], 200
         # return [clipboarditem.to_dict(rules=("-tag_clipboarditems", )) for clipboarditem in clipboarditems], 200
     
@@ -193,7 +196,7 @@ class getOneClipboardItem(Resource):
                 "error": "Clipboard Item not found"
             }, 404
         
-api.add_resource(getOneClipboardItem,'/clipboarditems/<id>')
+api.add_resource(getOneClipboardItem,'/clipboarditems/<int:id>')
 
 
 class SaveClipboard(Resource):
@@ -226,6 +229,7 @@ class SaveClipboard(Resource):
         return 'Content saved', 201
 
 api.add_resource(SaveClipboard, '/save_clipboard')
+
 
 
 
@@ -435,7 +439,7 @@ class getOneTag(Resource):
                 "error": "Tag not found"
             }, 404
         
-api.add_resource(getOneTag,'/tags/<id>')
+api.add_resource(getOneTag,'/tags/<int:id>')
 
 
 

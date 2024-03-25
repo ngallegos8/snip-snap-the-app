@@ -6,7 +6,7 @@ import Preview from "./Preview"
 
 
 
-function Explorer({ clipboardItems, deleteClipItem }) {
+function Explorer({ clipboardItems, deleteClipboardItem }) {
     // console.log(clipboardItems)
     
 
@@ -16,7 +16,7 @@ function Explorer({ clipboardItems, deleteClipItem }) {
             <h1>Explorer</h1>
 
             <div className="clipitemlist">
-                <ClipItemList clipboardItems={clipboardItems} deleteClipItem={deleteClipItem} />
+                <ClipItemList clipboardItems={clipboardItems} deleteClipboardItem={deleteClipboardItem} />
             </div>
 
             <div className="preview">

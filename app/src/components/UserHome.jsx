@@ -11,6 +11,7 @@ import Explorer from "./Explorer"
 
 function UserHome({ onLogin }) {
     const [clipboardItems, setClipboardItems] = useState([]);
+    const [clipboardItemDelete, setClipboardItemDelete] = useState([]);
     const [searchClipboardItems, setSearchClipboardItems] = useState("");
     const [user, setUser] = useState(null)
     // const history = useHistory();
@@ -25,6 +26,9 @@ function UserHome({ onLogin }) {
     }, [])
     
     console.log(clipboardItems)
+
+  
+    
     
     function deleteClipboardItem(id) {
     const newClipboardItems = clipboardItems.filter((clipboardItem) => clipboardItem.id !== id)
