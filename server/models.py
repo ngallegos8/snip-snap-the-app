@@ -72,6 +72,8 @@ class ClipboardItem(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
+    # is_favorited = db.Column(db.Boolean, default=False)
+    # keyboard_shortcut = db.Column(db.String, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -89,7 +91,7 @@ class Tag(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    # user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
 
     # Correct the back_populates attribute to match the relationship name in ClipboardItemTag
     clipboarditem_tags = db.relationship('ClipboardItem', secondary='clipboarditemtags', back_populates='tag_clipboarditems')
@@ -114,5 +116,23 @@ class ClipboardItemTag(db.Model, SerializerMixin):
     
     # Add serialization rules
     serialize_rules = ('-clipboarditem.clipboarditem_tags', '-tag.tag_clipboarditems')
+
+
+# # # w/ overlaps
+# class ClipboardItemTag(db.Model, SerializerMixin):
+#     __tablename__ = 'clipboarditemtags'
+
+#     id = db.Column(db.Integer, primary_key=True)
+#     clipboard_item_id = db.Column(db.Integer, db.ForeignKey('clipboarditems.id'), nullable=False)
+#     tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'), nullable=False)
+
+#     clipboarditem = db.relationship('ClipboardItem', backref='clipboarditem_tags', overlaps="clipboarditem_tags,tag_clipboarditems")
+#     tag = db.relationship('Tag', backref='tag_clipboarditems', overlaps="clipboarditem_tags,tag_clipboarditems")
+#     serialize_rules = ('-clipboarditem.clipboarditem_tags', '-tag.tag_clipboarditems')
+
+
+
+
+
 
 

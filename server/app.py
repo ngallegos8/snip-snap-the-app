@@ -15,7 +15,9 @@ bp = Blueprint('clipboard', __name__)
 # Local imports
 from config import app, api
 # from server.config import app, api
+
 CORS(app)
+# CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
 
 
 #) ✅ python -c 'import os; print(os.urandom(16))'
@@ -25,7 +27,6 @@ app.secret_key = b'\tG\xfc1\x97\xc1(\xfc\xfb\x17\xf3\xf9T\xff\xeb\xb0'
 
 
 # Add your model imports
-# from models import db
 from models import db, User, ClipboardItem, Tag, ClipboardItemTag
 # from server.models import db
 
@@ -162,7 +163,8 @@ class getAllClipboardItems(Resource):
         clipboarditems = ClipboardItem.query.all()
         # return [clipboarditem.to_dict(only=("content", "user_id")) for clipboarditem in clipboarditems], 200
         # return [clipboarditem.to_dict(only=("content", )) for clipboarditem in clipboarditems], 200
-        return [clipboarditem.to_dict(only=("content", "id")) for clipboarditem in clipboarditems], 200
+        return [clipboarditem.to_dict(only=("content", "id", "-tag_clipboarditems")) for clipboarditem in clipboarditems], 200
+        # return [clipboarditem.to_dict() for clipboarditem in clipboarditems], 200
         # return [clipboarditem.to_dict(only=("content","-tag_clipboarditems")) for clipboarditem in clipboarditems], 200
         # return [clipboarditem.to_dict(rules=("-tag_clipboarditems", )) for clipboarditem in clipboarditems], 200
     
@@ -441,6 +443,16 @@ class getOneTag(Resource):
             }, 404
         
 api.add_resource(getOneTag,'/tags/<int:id>')
+
+class ClipboardItemsByTag(Resource):
+    def get(self, tag_id):
+        clipboard_item_tags = ClipboardItemTag.query.filter_by(tag_id=tag_id).all()
+        clipboard_item_ids = [clipboard_item_tag.clipboard_item_id for clipboard_item_tag in clipboard_item_tags]
+        clipboard_items = ClipboardItem.query.filter(ClipboardItem.id.in_(clipboard_item_ids)).all()
+        return [clipboard_item.to_dict() for clipboard_item in clipboard_items], 200
+
+api.add_resource(ClipboardItemsByTag, '/clipboarditems/tag/<int:tag_id>')
+
 
 
 

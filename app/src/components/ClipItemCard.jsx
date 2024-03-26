@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 
-function ClipItemCard({ key, clipboardItem, deleteClipboardItem }) {
-  
+function ClipItemCard({ clipboardItem, deleteClipboardItem, onSelect }) {
+
   // console.log(clipboardItem)
 
 
@@ -17,12 +17,11 @@ function ClipItemCard({ key, clipboardItem, deleteClipboardItem }) {
 
     
     return (
-      <div className="clipitemcard-component">
-        {clipboardItem.content}
-        {clipboardItem.id}
-        <button className="remove-clipboarditem" onClick={handleDelete}>Delete</button>
-
-      </div>
+      <div className="clipitemcard-component" onClick={() => onSelect(clipboardItem)}>
+            {clipboardItem.content}
+            {clipboardItem.id}
+            <button className="remove-clipboarditem" onClick={handleDelete}>Delete</button>
+        </div>
     )
   }
 

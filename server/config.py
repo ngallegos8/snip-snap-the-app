@@ -1,11 +1,11 @@
 from flask import Flask
-from flask_cors import CORS
+# from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 
-# from models import db
+
 from models import db
 # from server.models import db
 
@@ -29,4 +29,4 @@ db.init_app(app)
 api = Api(app)
 
 # Instantiate CORS
-CORS(app)
+# CORS(app)

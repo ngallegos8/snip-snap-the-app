@@ -2,7 +2,6 @@ from app import app
 from models import db, User, ClipboardItem, Tag, ClipboardItemTag
 # from server.app import app 
 # from server.models import db, User, ClipboardItem, Tag, ClipboardItemTag
-from datetime import datetime
 
 with app.app_context():
     print("Deleting Customers")
@@ -43,10 +42,10 @@ with app.app_context():
     db.session.add(item6)
 
     # Create new Tag instances
-    name_tag = Tag(name="Name", user_id=1)
-    letters_tag = Tag(name="Letters", user_id=2)
-    image_tag = Tag(name="Image", user_id=2)
-    code_tag = Tag(name="Code", user_id=3)
+    name_tag = Tag(name="Name")
+    letters_tag = Tag(name="Letters")
+    image_tag = Tag(name="Image")
+    code_tag = Tag(name="Code")
 
     db.session.add(name_tag)
     db.session.add(letters_tag)

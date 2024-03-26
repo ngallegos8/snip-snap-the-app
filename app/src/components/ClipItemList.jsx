@@ -1,11 +1,11 @@
 import React from "react";
 import ClipItemCard from "./ClipItemCard";
 
-function ClipItemList({ clipboardItems, deleteClipboardItem}) {   
+function ClipItemList({ clipboardItems, deleteClipboardItem, onSelect }) {   
   // console.log(clipboardItems)
 
   const clipboardItemList = clipboardItems.map(clipboardItem => {
-    return <ClipItemCard key={clipboardItem.id} clipboardItem={clipboardItem} deleteClipboardItem={deleteClipboardItem} />  
+    return <ClipItemCard key={clipboardItem.id} clipboardItem={clipboardItem} deleteClipboardItem={deleteClipboardItem} onSelect={onSelect} />  
   })
 //  console.log(clipboardItemList)
 
