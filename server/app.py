@@ -85,7 +85,8 @@ class Login(Resource):
             session["user_id"] = user.id
             # logging.debug(f"Session data after setting user_id: {session.items()}")
             # logging.debug(f"User {username} authenticated successfully.")
-            return user.to_dict(rules=("-clipboarditems",)), 200
+            # return user.to_dict(rules=("-clipboard_items",)), 200
+            return user.to_dict(), 200
         else:
             logging.debug(f"Authentication failed for user {username}.")
             return "Invalid Credentials", 401
@@ -109,7 +110,8 @@ class CheckSession(Resource):
         if user_id:
             user = User.query.filter(User.id == user_id).first()
             session["user_id"] = user.id
-            return user.to_dict(rules=('-clipboard_items.user',)), 200
+            # return user.to_dict(rules=('-clipboard_items.user',)), 200
+            return user.to_dict(), 200
         return {}, 401
     
 api.add_resource(CheckSession, "/check_session")
@@ -163,8 +165,8 @@ class getAllClipboardItems(Resource):
         clipboarditems = ClipboardItem.query.all()
         # return [clipboarditem.to_dict(only=("content", "user_id")) for clipboarditem in clipboarditems], 200
         # return [clipboarditem.to_dict(only=("content", )) for clipboarditem in clipboarditems], 200
-        return [clipboarditem.to_dict(only=("content", "id", "-tag_clipboarditems")) for clipboarditem in clipboarditems], 200
-        # return [clipboarditem.to_dict() for clipboarditem in clipboarditems], 200
+        # return [clipboarditem.to_dict(only=("content", "id", "-tag_clipboarditems")) for clipboarditem in clipboarditems], 200
+        return [clipboarditem.to_dict() for clipboarditem in clipboarditems], 200
         # return [clipboarditem.to_dict(only=("content","-tag_clipboarditems")) for clipboarditem in clipboarditems], 200
         # return [clipboarditem.to_dict(rules=("-tag_clipboarditems", )) for clipboarditem in clipboarditems], 200
     
@@ -382,7 +384,8 @@ class getAllTags(Resource):
     def get(self):
         tags = Tag.query.all()
         # return [tag.to_dict(only=("name", "user_id")) for tag in tags], 200
-        return [tag.to_dict(only=("name", "id")) for tag in tags], 200
+        # return [tag.to_dict(only=("name", "id")) for tag in tags], 200
+        return [tag.to_dict() for tag in tags], 200
     
     def post(self):
         try:

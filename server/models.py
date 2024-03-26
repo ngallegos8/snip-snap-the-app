@@ -46,6 +46,15 @@ class User(db.Model):
     def authenticate(self, password):
         return bcrypt.check_password_hash(self.password_hash, password.encode("utf-8"))
     
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "password": self.password,
+            "email": self.email
+        }
+
+    
 
     # #  VALIDATIONS
     # @validates('username')
@@ -55,7 +64,9 @@ class User(db.Model):
     #     else:
     #         raise ValueError("Username must be greater than 1 character")
 
-    clipboard_items = db.relationship('ClipboardItem', back_populates='user')
+    clipboard_items = db.relationship('ClipboardItem', back_populates='users')
+    serialize_rules = ('-clipboard_items.users',)
+
 
 class ClipboardItem(db.Model):
     __tablename__ = 'clipboard_items'
@@ -63,14 +74,26 @@ class ClipboardItem(db.Model):
     content = db.Column(db.Text, nullable=False)
     is_favorited = db.Column(db.Boolean, default=False)
     keyboard_shortcut = db.Column(db.String, nullable=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
     tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'))
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    user = db.relationship('User', back_populates='clipboard_items')
-    tag = db.relationship('Tag', back_populates='clipboard_items')
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "content": self.content,
+            "is_favorited": self.is_favorited,
+            "keyboard_shortcut": self.keyboard_shortcut,
+            "user_id": self.user_id,
+            "tag_id": self.tag_id
+        }
+
+
+    users = db.relationship('User', back_populates='clipboard_items')
+    tags = db.relationship('Tag', back_populates='clipboard_items')
+    serialize_rules = ('-users.clipboard_items', 'tag.clipboard_items')
 
 class Tag(db.Model):
     __tablename__ = 'tags'
@@ -78,7 +101,16 @@ class Tag(db.Model):
     name = db.Column(db.String(50), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
 
-    clipboard_items = db.relationship('ClipboardItem', back_populates='tag')
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "user_id": self.user_id
+        }
+
+    clipboard_items = db.relationship('ClipboardItem', back_populates='tags')
+    serialize_rules = ('-clipboard_items.tags',)
+    
 
 
 

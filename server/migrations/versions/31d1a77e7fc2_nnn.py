@@ -1,8 +1,8 @@
 """nnn
 
-Revision ID: a9790640ff84
+Revision ID: 31d1a77e7fc2
 Revises: 
-Create Date: 2024-03-26 11:19:05.822531
+Create Date: 2024-03-26 11:57:57.257647
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'a9790640ff84'
+revision = '31d1a77e7fc2'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -41,7 +41,7 @@ def upgrade():
     sa.Column('content', sa.Text(), nullable=False),
     sa.Column('is_favorited', sa.Boolean(), nullable=True),
     sa.Column('keyboard_shortcut', sa.String(), nullable=True),
-    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('tag_id', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
