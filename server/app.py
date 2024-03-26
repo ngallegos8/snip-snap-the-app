@@ -379,7 +379,8 @@ api.add_resource(SaveClipboard, '/save_clipboard')
 class getAllTags(Resource):
     def get(self):
         tags = Tag.query.all()
-        return [tag.to_dict(only=("name", "user_id")) for tag in tags], 200
+        # return [tag.to_dict(only=("name", "user_id")) for tag in tags], 200
+        return [tag.to_dict(only=("name", "id")) for tag in tags], 200
     
     def post(self):
         try:

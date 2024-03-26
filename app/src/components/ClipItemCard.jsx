@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 
 
 function ClipItemCard({ key, clipboardItem, deleteClipboardItem }) {
-  // const [clipboardItem, setClipboardItem] = useState("")
-  const [clipboardItemDelete, setClipboardItemDelete] = useState("");
-  console.log(clipboardItem)
+  
+  // console.log(clipboardItem)
 
 
 

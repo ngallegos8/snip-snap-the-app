@@ -1,5 +1,4 @@
 import React, {useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 
 import Finder from "./Finder"
@@ -8,13 +7,11 @@ import Explorer from "./Explorer"
 
 
 
-
 function UserHome({ onLogin }) {
     const [clipboardItems, setClipboardItems] = useState([]);
-    const [clipboardItemDelete, setClipboardItemDelete] = useState([]);
+    const [tags, setTags] = useState([]);
     const [searchClipboardItems, setSearchClipboardItems] = useState("");
     const [user, setUser] = useState(null)
-    // const history = useHistory();
     const navigate = useNavigate();
 
     // console.log(clipboardItems)
@@ -24,22 +21,33 @@ function UserHome({ onLogin }) {
         .then(response => response.json())
         .then(setClipboardItems)
     }, [])
-    
-    console.log(clipboardItems)
+    // console.log(clipboardItems)
 
-  
     
+    useEffect(() => {
+      fetch("http://127.0.0.1:5000/tags")
+      .then(response => response.json())
+      .then(setTags)
+  }, [])
+//   console.log(tags)
+   
+
     
     function deleteClipboardItem(id) {
     const newClipboardItems = clipboardItems.filter((clipboardItem) => clipboardItem.id !== id)
     setClipboardItems(newClipboardItems)
     }
 
+    function deleteTag(id) {
+  const newTags = tags.filter((tag) => tag.id !== id)
+  setTags(newTags)
+  }
+
     // const displayedClipboardItems = clipboardItems.filter((clipboardItem) => clipboardItem.content.toLowerCase().includes(searchClipboardItems.toLowerCase()))
 
     //    ALLOWS SEARCH FUNCTION TO SEARCH FOR ANY RATIONAL PARAMETER IN THE EVENT OBJECT
     const displayedClipboardItems = clipboardItems.filter((clipboardItem) => {
-        console.log(clipboardItem.content)
+        // console.log(clipboardItem.content)
         return clipboardItem.content.toLowerCase().includes(searchClipboardItems.toLowerCase())
 
     })
@@ -63,7 +71,7 @@ function UserHome({ onLogin }) {
             <div className="window">
 
                 <div className="finder">
-                    <Finder search={searchClipboardItems} setSearch={setSearchClipboardItems} handleLogout={handleLogout}/>
+                    <Finder search={searchClipboardItems} setSearch={setSearchClipboardItems} tags={tags} deleteTag={deleteTag} handleLogout={handleLogout}/>
                 </div>
 
                 <div className="explorer">
