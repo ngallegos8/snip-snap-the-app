@@ -9,6 +9,7 @@ function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect }) {
   const [tagName, setTagName] = useState(tag.name)
   const [tagColor, setTagColor] = useState(tag.color)
   const [showUpdateForm, setShowUpdateForm] = useState(false);
+  // const [onTagClick, setOnTagClick] = useState([])
 
   console.log(tag)
 
@@ -64,7 +65,7 @@ function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect }) {
     
     return (
       <li className="tagcard-component">
-          <button className="tag-name-btn" onClick={() => handleTagClick}>{tag.id} {tag.name}</button>
+          <button className="tag-name-btn" onClick={() => handleTagClick()}>{tag.id} {tag.name}</button>
           <button className="show-update-form-button" onClick={() => setShowUpdateForm(!showUpdateForm)}>
             {showUpdateForm ? <img src={uneditIcon} alt="Unedit Tag" className="unedit-img"/> : <img src={updateIcon} alt="Update Tag" className="edit-img"/>}
           </button>

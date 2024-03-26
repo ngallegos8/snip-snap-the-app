@@ -75,7 +75,7 @@ function UserHome({ onLogin }) {
         console.log("Delete:", clipboardItem);
     };
 
-    // const displayedClipboardItems = clipboardItems.filter((clipboardItem) => clipboardItem.content.toLowerCase().includes(searchClipboardItems.toLowerCase()))
+
 
     //    ALLOWS SEARCH FUNCTION TO SEARCH FOR ANY RATIONAL PARAMETER IN THE EVENT OBJECT
     const displayedClipboardItems = clipboardItems.filter((clipboardItem) => {
@@ -158,8 +158,8 @@ function UserHome({ onLogin }) {
                 <div className="explorer">
                     <Explorer 
                     // clipboardItems={displayedClipboardItems}
-                    // clipboardItems={filteredClipboardItems.length > 0 ? filteredClipboardItems : displayedClipboardItems}
-                    clipboardItems={filteredClipboardItems.length > 0 ? filteredClipboardItems : clipboardItems}
+                    clipboardItems={filteredClipboardItems.length > 0 ? filteredClipboardItems : displayedClipboardItems}
+                    // clipboardItems={filteredClipboardItems.length > 0 ? filteredClipboardItems : clipboardItems}
                     deleteClipboardItem={deleteClipboardItem}
                     onFavorite={onFavorite}
                     onCopyToClipboard={onCopyToClipboard}
