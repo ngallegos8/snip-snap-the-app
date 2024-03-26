@@ -189,6 +189,35 @@ api.add_resource(getAllClipboardItems,'/clipboarditems')
 
 
 class getOneClipboardItem(Resource):
+
+    def get(self,id):
+        clipboard_item = ClipboardItem.query.filter(ClipboardItem.id == id).first()
+        if(clipboard_item):
+            return clipboard_item.to_dict(), 200
+        else:
+            return {
+                "error": "ClipboardItem not found"
+            }, 404
+        
+    def patch(self,id):
+        clipboard_item = ClipboardItem.query.filter(ClipboardItem.id == id).first()
+        if(clipboard_item):
+            try:
+                data = request.get_json()
+                for key in data:
+                    setattr(clipboard_item, key, data[key])
+                db.session.add(clipboard_item)
+                db.session.commit()
+                return clipboard_item.to_dict(), 202
+            except Exception as e:
+                print(e)
+                return {"errors": ["validation errors"]}, 400
+        else:
+            return {
+                "error": "ClipboardItem not found"
+            }, 404
+
+
     def delete(self,id):
         clipboard_item = ClipboardItem.query.filter(ClipboardItem.id == id).first()
         if(clipboard_item):

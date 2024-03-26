@@ -64,16 +64,28 @@ function UserHome({ onLogin }) {
     // Implement favorite/assign to keyboard shortcut logic
     console.log("Favorite/Assign to Keyboard Shortcut:", clipboardItem);
     };
+    
+    // const onAssignTag = (clipboardItem) => {
+    // console.log("Assign Tag to ClipboardItem:", clipboardItem);
+    // };
+
+    function handleAssignTag(newClipItem) {
+        const updatedClipItems = clipboardItems.map((clipboardItem) => {
+            if (clipboardItem.id == newClipItem.id) {
+                return newClipItem
+            } else {
+                return clipboardItem
+            }
+        })
+        setClipboardItems(updatedClipItems)
+    }
+
 
     const onCopyToClipboard = (clipboardItem) => {
         // Implement copy to clipboard logic
         console.log("Copy to Clipboard:", clipboardItem);
     };
 
-    const onDelete = (clipboardItem) => {
-        // Implement delete logic
-        console.log("Delete:", clipboardItem);
-    };
 
 
 
@@ -161,6 +173,8 @@ function UserHome({ onLogin }) {
                     clipboardItems={filteredClipboardItems.length > 0 ? filteredClipboardItems : displayedClipboardItems}
                     // clipboardItems={filteredClipboardItems.length > 0 ? filteredClipboardItems : clipboardItems}
                     deleteClipboardItem={deleteClipboardItem}
+                    tags={tags}
+                    updateAssignTag={handleAssignTag}
                     onFavorite={onFavorite}
                     onCopyToClipboard={onCopyToClipboard}
                     onSelect={handleSelect}
