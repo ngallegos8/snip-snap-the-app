@@ -10,14 +10,14 @@ function Signup({ onLogin }) {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        fetch("http://127.0.0.1:5000/check_session").then((r) => {
-          if (r.ok) {
-            r.json().then((user) => setUser(user));
-          }
-        });
-      }, []);
+    //     fetch("http://127.0.0.1:5000/check_session").then((r) => {
+    //       if (r.ok) {
+    //         r.json().then((user) => setUser(user));
+    //       }
+    //     });
+    //   }, []);
 
 
     function handleSignup(e){

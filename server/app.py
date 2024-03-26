@@ -391,23 +391,22 @@ class getAllTags(Resource):
         try:
             data = request.get_json()
             tag_name = data['name']
-            user_id = data['user_id']
+            # user_id = data['user_id']
+            # tag_color = data['color']
             
-            # Check if the tag name is one of the common tags
-            common_tags = ["Text", "Image", "Email", "File", "Code"]
-            if tag_name in common_tags:
-                # If it is, find the existing common tag
-                tag = Tag.query.filter_by(name=tag_name).first()
-                if not tag:
-                    # If the common tag doesn't exist, create it
-                    tag = Tag(name=tag_name)
-                    db.session.add(tag)
-                    db.session.commit()
-            else:
-                # If it's not a common tag, create a new tag specific to the user
-                tag = Tag(name=tag_name, user_id=user_id)
-                db.session.add(tag)
-                db.session.commit()
+            # common_tags = ["Text", "Image", "Email", "File", "Code"]
+            # if tag_name in common_tags:
+            #     tag = Tag.query.filter(Tag.name == tag_name).first()
+            #     if not tag:
+            #         tag = Tag(name=tag_name)
+            #         db.session.add(tag)
+            #         db.session.commit()
+            # else:
+
+            tag = Tag(name=tag_name)
+            # tag = Tag(name=tag_name, color=tag_color, user_id=user_id)
+            db.session.add(tag)
+            db.session.commit()
             
             return tag.to_dict(), 201
         except Exception as e:

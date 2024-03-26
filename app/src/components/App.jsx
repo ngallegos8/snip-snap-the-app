@@ -1,10 +1,8 @@
 
 import React, { useEffect, useState } from "react";
-import { Switch, Route, Routes, createBrowserRoute, RouterProvider, BrowserRouter } from "react-router-dom";
-import NavBar from './Navbar'
+import { Route, Routes, BrowserRouter } from "react-router-dom";
 import UserHome from './UserHome'
 import Signup from'./Signup'
-import Home from './Home'
 import Login from './Login'
 
 
@@ -12,9 +10,9 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-
-    fetch("http://127.0.0.1:5000/check_session").then((r) => {
-      // console.log(r)
+    // console.log("HELP")
+    fetch("/check_session").then((r) => {
+      console.log(r)
       if (r.ok) {
         r.json().then((user) => setUser(user));
       }

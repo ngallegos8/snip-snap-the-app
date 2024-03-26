@@ -27,7 +27,7 @@ function UserHome({ onLogin }) {
     // console.log(clipboardItems)
     
     useEffect(() => {
-        fetch("http://127.0.0.1:5000/clipboarditems")
+        fetch("/clipboarditems")
         .then(response => response.json())
         .then(setClipboardItems)
     }, [])
@@ -35,7 +35,7 @@ function UserHome({ onLogin }) {
 
     
     useEffect(() => {
-      fetch("http://127.0.0.1:5000/tags")
+      fetch("/tags")
       .then(response => response.json())
       .then(setTags)
   }, [])
@@ -83,7 +83,6 @@ function UserHome({ onLogin }) {
         return clipboardItem.content.toLowerCase().includes(searchClipboardItems.toLowerCase())
 
     })
-
     console.log(clipboardItems)
 
     // const handleTagClick = (tagId) => {
@@ -91,12 +90,17 @@ function UserHome({ onLogin }) {
     //     const filteredItems = clipboardItems.filter(clipboardItem => (clipboardItem.tag?.includes(tagId) ?? false));
     //     setFilteredClipboardItems(filteredItems);
     // };
+
     const handleTagClick = (tagId) => {
         // Filter clipboardItems where the tag_id matches the selected tag's ID
         const filteredItems = clipboardItems.filter(clipboardItem => clipboardItem.tag_id === tagId);
         setFilteredClipboardItems(filteredItems);
     };
     console.log(filteredClipboardItems)
+
+    function handleNewTagFormSubmit(newTag) {
+        setTags([...tags, newTag])
+    }
 
     function handleUpdateTag(newTag) {
         const updatedTags = tags.map((tag) => {
@@ -109,9 +113,6 @@ function UserHome({ onLogin }) {
         setTags(updatedTags)
         }
 
-
-
-
     function deleteTag(id) {
         const newTags = tags.filter((tag) => tag.id !== id)
         setTags(newTags)
@@ -120,10 +121,9 @@ function UserHome({ onLogin }) {
     
     
 
-
     function handleLogout() {
         alert("See you next time!");
-        fetch("http://127.0.0.1:5000/logout", {
+        fetch("/logout", {
             method: "DELETE"
         })
         .then(() => {
@@ -149,7 +149,9 @@ function UserHome({ onLogin }) {
                     onTagClick={handleTagClick}
                     onSelect={handleSelect}
                     selectedClipboardItem={selectedClipboardItem}
+                    onNewTagFormSubmit={handleNewTagFormSubmit}
                     updateTag={handleUpdateTag}
+                    // onLogin={onLogin}
                     />
                 </div>
 

@@ -8,7 +8,7 @@ function ClipItemCard({ clipboardItem, deleteClipboardItem, onSelect }) {
 
 
   function handleDelete() {
-    fetch(`http://127.0.0.1:5000/clipboarditems/${clipboardItem.id}`, {
+    fetch(`/clipboarditems/${clipboardItem.id}`, {
       method: "DELETE"
     })
     deleteClipboardItem(clipboardItem.id)
