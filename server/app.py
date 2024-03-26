@@ -27,7 +27,7 @@ app.secret_key = b'\tG\xfc1\x97\xc1(\xfc\xfb\x17\xf3\xf9T\xff\xeb\xb0'
 
 
 # Add your model imports
-from models import db, User, ClipboardItem, Tag, ClipboardItemTag
+from models import db, User, ClipboardItem, Tag
 # from server.models import db
 
 import logging
@@ -386,17 +386,30 @@ class getAllTags(Resource):
     
     def post(self):
         try:
-            data= request.get_json()
-            new_tag = Tag(
-                name = data['name'],
-                user_id = data['user_id']
-            )
-            db.session.add(new_tag)
-            db.session.commit()
-            return new_tag.to_dict(), 201
+            data = request.get_json()
+            tag_name = data['name']
+            user_id = data['user_id']
+            
+            # Check if the tag name is one of the common tags
+            common_tags = ["Text", "Image", "Email", "File", "Code"]
+            if tag_name in common_tags:
+                # If it is, find the existing common tag
+                tag = Tag.query.filter_by(name=tag_name).first()
+                if not tag:
+                    # If the common tag doesn't exist, create it
+                    tag = Tag(name=tag_name)
+                    db.session.add(tag)
+                    db.session.commit()
+            else:
+                # If it's not a common tag, create a new tag specific to the user
+                tag = Tag(name=tag_name, user_id=user_id)
+                db.session.add(tag)
+                db.session.commit()
+            
+            return tag.to_dict(), 201
         except Exception as e:
             print(e)
-            return { "errors": ["validation errors"] }, 400
+            return {"errors": ["validation errors"]}, 400
         
 api.add_resource(getAllTags,'/tags')
 
@@ -444,14 +457,14 @@ class getOneTag(Resource):
         
 api.add_resource(getOneTag,'/tags/<int:id>')
 
-class ClipboardItemsByTag(Resource):
-    def get(self, tag_id):
-        clipboard_item_tags = ClipboardItemTag.query.filter_by(tag_id=tag_id).all()
-        clipboard_item_ids = [clipboard_item_tag.clipboard_item_id for clipboard_item_tag in clipboard_item_tags]
-        clipboard_items = ClipboardItem.query.filter(ClipboardItem.id.in_(clipboard_item_ids)).all()
-        return [clipboard_item.to_dict() for clipboard_item in clipboard_items], 200
+# class ClipboardItemsByTag(Resource):
+#     def get(self, tag_id):
+#         clipboard_item_tags = ClipboardItemTag.query.filter_by(tag_id=tag_id).all()
+#         clipboard_item_ids = [clipboard_item_tag.clipboard_item_id for clipboard_item_tag in clipboard_item_tags]
+#         clipboard_items = ClipboardItem.query.filter(ClipboardItem.id.in_(clipboard_item_ids)).all()
+#         return [clipboard_item.to_dict() for clipboard_item in clipboard_items], 200
 
-api.add_resource(ClipboardItemsByTag, '/clipboarditems/tag/<int:tag_id>')
+# api.add_resource(ClipboardItemsByTag, '/clipboarditems/tag/<int:tag_id>')
 
 
 

@@ -4,7 +4,7 @@ import Controls from "./Controls";
 import DisplayPreview from "./DisplayPreview";
 
 
-function Preview ({ selectedClipboardItem, deleteClipboardItem, onFavorite, onCopyToClipboard, onDelete }) {
+function Preview ({ selectedClipboardItem, deleteClipboardItem, onFavorite, onCopyToClipboard }) {
     
 
     
@@ -13,7 +13,7 @@ function Preview ({ selectedClipboardItem, deleteClipboardItem, onFavorite, onCo
             <h3>Preview</h3>
 
             <div className="controls">
-                <Controls selectedClipboardItem={selectedClipboardItem} deleteClipboardItem={deleteClipboardItem} onFavorite={onFavorite} onCopyToClipboard={onCopyToClipboard} onDelete={onDelete}/>
+                <Controls selectedClipboardItem={selectedClipboardItem} deleteClipboardItem={deleteClipboardItem} onFavorite={onFavorite} onCopyToClipboard={onCopyToClipboard} />
             </div>
 
             <div className="displaypreview">

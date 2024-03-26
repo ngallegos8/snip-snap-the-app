@@ -1,7 +1,16 @@
 from app import app 
-from models import db, User, ClipboardItem, Tag, ClipboardItemTag
+from models import db, User, ClipboardItem, Tag
 # from server.app import app 
-# from server.models import db, User, ClipboardItem, Tag, ClipboardItemTag
+# from server.models import db, User, ClipboardItem, Tag
+
+def seed_common_tags():
+    common_tags = ["Text", "Image", "Email", "File", "Code"]
+    for tag_name in common_tags:
+        tag = Tag.query.filter_by(name=tag_name).first()
+        if not tag:
+            tag = Tag(name=tag_name)
+            db.session.add(tag)
+    db.session.commit()
 
 with app.app_context():
     print("Deleting Customers")
@@ -15,7 +24,7 @@ with app.app_context():
     User.query.delete()
     ClipboardItem.query.delete()
     Tag.query.delete()
-    ClipboardItemTag.query.delete()
+    # ClipboardItemTag.query.delete()
 
     # Create new User instances
     stephen = User(username="Stephen", password="Lambert", email="stephen@gmail.com")
@@ -42,26 +51,46 @@ with app.app_context():
     db.session.add(item6)
 
     # Create new Tag instances
-    name_tag = Tag(name="Name")
-    letters_tag = Tag(name="Letters")
-    image_tag = Tag(name="Image")
-    code_tag = Tag(name="Code")
 
-    db.session.add(name_tag)
-    db.session.add(letters_tag)
-    db.session.add(image_tag)
-    db.session.add(code_tag)
 
-    # Create ClipboardItemTag instances
-    clipboard_item_tag1 = ClipboardItemTag(clipboard_item_id=1, tag_id=1)
-    clipboard_item_tag2 = ClipboardItemTag(clipboard_item_id=2, tag_id=2)
-    clipboard_item_tag3 = ClipboardItemTag(clipboard_item_id=3, tag_id=3)
+    # name_tag_1 = Tag(name="Name", user_id=1)
+    # letters_tag_1 = Tag(name="Letters", user_id=1)
+    # image_tag_1 = Tag(name="Image", user_id=1)
+    # code_tag_1 = Tag(name="Code", user_id=1)
+    # name_tag_2 = Tag(name="Name", user_id=2)
+    # letters_tag_2 = Tag(name="Letters", user_id=2)
+    # image_tag_2 = Tag(name="Image", user_id=2)
+    # code_tag_2 = Tag(name="Code", user_id=2)
+    # name_tag_3 = Tag(name="Name", user_id=3)
+    # letters_tag_3 = Tag(name="Letters", user_id=3)
+    # image_tag_3 = Tag(name="Image", user_id=3)
+    # code_tag_3 = Tag(name="Code", user_id=3)
 
-    db.session.add(clipboard_item_tag1)
-    db.session.add(clipboard_item_tag2)
-    db.session.add(clipboard_item_tag3)
+    # db.session.add(name_tag_1)
+    # db.session.add(letters_tag_1)
+    # db.session.add(image_tag_1)
+    # db.session.add(code_tag_1)
+    # db.session.add(name_tag_2)
+    # db.session.add(letters_tag_2)
+    # db.session.add(image_tag_2)
+    # db.session.add(code_tag_2)
+    # db.session.add(name_tag_3)
+    # db.session.add(letters_tag_3)
+    # db.session.add(image_tag_3)
+    # db.session.add(code_tag_3)
+
+    # # Create ClipboardItemTag instances
+    # clipboard_item_tag1 = ClipboardItemTag(clipboard_item_id=1, tag_id=1)
+    # clipboard_item_tag2 = ClipboardItemTag(clipboard_item_id=2, tag_id=2)
+    # clipboard_item_tag3 = ClipboardItemTag(clipboard_item_id=3, tag_id=3)
+
+    # db.session.add(clipboard_item_tag1)
+    # db.session.add(clipboard_item_tag2)
+    # db.session.add(clipboard_item_tag3)
 
     # Commit the changes to the database
     db.session.commit()
+
+    seed_common_tags()
 
     print("Database seeded successfully.")

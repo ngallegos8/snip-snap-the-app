@@ -6,7 +6,7 @@ import Preview from "./Preview"
 
 
 
-function Explorer({ clipboardItems, deleteClipboardItem, onFavorite, onCopyToClipboard, onDelete }) {
+function Explorer({ clipboardItems, deleteClipboardItem, onFavorite, onCopyToClipboard }) {
     // console.log(clipboardItems)
     const [selectedClipboardItem, setSelectedClipboardItem] = useState(null);
 
@@ -23,7 +23,7 @@ function Explorer({ clipboardItems, deleteClipboardItem, onFavorite, onCopyToCli
                 <ClipItemList clipboardItems={clipboardItems} deleteClipboardItem={deleteClipboardItem} onSelect={handleSelect} />
             </div>
             <div className="preview">
-                <Preview selectedClipboardItem={selectedClipboardItem} deleteClipboardItem={deleteClipboardItem} onFavorite={onFavorite} onCopyToClipboard={onCopyToClipboard} onDelete={onDelete} />
+                <Preview selectedClipboardItem={selectedClipboardItem} deleteClipboardItem={deleteClipboardItem} onFavorite={onFavorite} onCopyToClipboard={onCopyToClipboard} />
             </div>
         </div>
     )

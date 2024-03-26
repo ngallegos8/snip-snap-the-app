@@ -38,12 +38,12 @@ function UserHome({ onLogin }) {
   }, [])
   console.log(tags)
 
-  useEffect(() => {
-      fetch("http://127.0.0.1:5000/clipboarditems/tag/<int:tag_id>")
-      .then(response => response.json())
-      .then(setClipItemTags)
-  }, [])
-  console.log(clipItemTags)
+//   useEffect(() => {
+//       fetch("http://127.0.0.1:5000/clipboarditems/tag/<int:tag_id>")
+//       .then(response => response.json())
+//       .then(setClipItemTags)
+//   }, [])
+//   console.log(clipItemTags)
    
 
     
@@ -137,7 +137,7 @@ function UserHome({ onLogin }) {
                 </div>
 
                 <div className="explorer">
-                    <Explorer clipboardItems={displayedClipboardItems} deleteClipboardItem={deleteClipboardItem} onFavorite={onFavorite} onCopyToClipboard={onCopyToClipboard} onDelete={onDelete} />
+                    <Explorer clipboardItems={displayedClipboardItems} deleteClipboardItem={deleteClipboardItem} onFavorite={onFavorite} onCopyToClipboard={onCopyToClipboard} />
                     {/* <Explorer clipboardItems={displayedTagClipboardItems} deleteClipboardItem={deleteClipboardItem}/> */}
                 </div>
 

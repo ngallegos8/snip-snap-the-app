@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 
-function Controls({ selectedClipboardItem, deleteClipboardItem, onFavorite, onCopyToClipboard, onDelete }) {
+function Controls({ selectedClipboardItem, deleteClipboardItem, onFavorite, onCopyToClipboard }) {
   const handleFavorite = () => {
       // Implement favorite/assign to keyboard shortcut logic
       onFavorite(selectedClipboardItem);
@@ -14,7 +14,7 @@ function Controls({ selectedClipboardItem, deleteClipboardItem, onFavorite, onCo
 
   const handleDelete = () => {
       // Implement delete logic
-      onDelete(selectedClipboardItem);
+      deleteClipboardItem(selectedClipboardItem);
   };
 
   return (

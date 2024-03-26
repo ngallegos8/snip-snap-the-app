@@ -21,19 +21,17 @@ metadata = MetaData(naming_convention={
 db = SQLAlchemy(metadata=metadata)
 
 
-
-class User(db.Model, SerializerMixin):
+class User(db.Model):
     __tablename__ = 'users'
-
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, unique = True)
+    username = db.Column(db.String(25), unique=True, nullable=False)
     _password_hash = db.Column(db.String)
-    email = db.Column(db.String, unique=True, nullable=False)
+    email = db.Column(db.String(50), unique=True, nullable=False)
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    #6.1 Create a get method using hybrid property, and bcrypt
+    # 6.1 Create a get method using hybrid property, and bcrypt
     @hybrid_property
     def password_hash(self):
         return self._password_hash
@@ -57,65 +55,128 @@ class User(db.Model, SerializerMixin):
     #     else:
     #         raise ValueError("Username must be greater than 1 character")
 
-    # Add relationship
-    clipboarditems = db.relationship('ClipboardItem', back_populates = "users")
+    clipboard_items = db.relationship('ClipboardItem', back_populates='user')
 
-    # Add serialization rules
-    serialize_rules = ('-clipboarditems.users',)
-
-
-
-
-class ClipboardItem(db.Model, SerializerMixin):
-    __tablename__ = 'clipboarditems'
-
+class ClipboardItem(db.Model):
+    __tablename__ = 'clipboard_items'
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
-    # is_favorited = db.Column(db.Boolean, default=False)
-    # keyboard_shortcut = db.Column(db.String, nullable=True)
+    is_favorited = db.Column(db.Boolean, default=False)
+    keyboard_shortcut = db.Column(db.String, nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'))
+
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    # Correct the back_populates attribute to match the relationship name in ClipboardItemTag
-    users = db.relationship('User', back_populates='clipboarditems')
-    tag_clipboarditems = db.relationship('Tag', secondary='clipboarditemtags', back_populates='clipboarditem_tags')
-    
-    # Add serialization rules
-    serialize_rules = ('-users.clipboarditems', '-tag_clipboarditems.clipboarditem_tags')
+    user = db.relationship('User', back_populates='clipboard_items')
+    tag = db.relationship('Tag', back_populates='clipboard_items')
 
-
-
-class Tag(db.Model, SerializerMixin):
+class Tag(db.Model):
     __tablename__ = 'tags'
-
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
-    # user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
 
-    # Correct the back_populates attribute to match the relationship name in ClipboardItemTag
-    clipboarditem_tags = db.relationship('ClipboardItem', secondary='clipboarditemtags', back_populates='tag_clipboarditems')
+    clipboard_items = db.relationship('ClipboardItem', back_populates='tag')
+
+
+
+
+# class User(db.Model, SerializerMixin):
+#     __tablename__ = 'users'
+
+#     id = db.Column(db.Integer, primary_key=True)
+#     username = db.Column(db.String, unique = True)
+#     _password_hash = db.Column(db.String)
+#     email = db.Column(db.String, unique=True, nullable=False)
+
+#     created_at = db.Column(db.DateTime, server_default=db.func.now())
+#     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+#     #6.1 Create a get method using hybrid property, and bcrypt
+#     @hybrid_property
+#     def password_hash(self):
+#         return self._password_hash
     
-    # Add serialization rules
-    serialize_rules = ('-clipboarditem_tags.tag_clipboarditems',)
-
-
-
-
-class ClipboardItemTag(db.Model, SerializerMixin):
-    __tablename__ = 'clipboarditemtags'
-
-    id = db.Column(db.Integer, primary_key=True)
-    clipboard_item_id = db.Column(db.Integer, db.ForeignKey('clipboarditems.id'), nullable=False)
-    tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'), nullable=False)
-
-
-    # Ensure the relationship names are correctly defined
-    clipboarditem = db.relationship('ClipboardItem', backref='clipboarditem_tags')
-    tag = db.relationship('Tag', backref='tag_clipboarditems')
+#     #6.2 Create a setter method to set the password using bcrypt
+#     @password_hash.setter
+#     def password(self, password):
+#         password_hash = bcrypt.generate_password_hash(password.encode("utf-8"))
+#         self._password_hash = password_hash.decode("utf-8")
     
-    # Add serialization rules
-    serialize_rules = ('-clipboarditem.clipboarditem_tags', '-tag.tag_clipboarditems')
+#     #6.3 Create an authentication method to check the password using bcrypt
+#     def authenticate(self, password):
+#         return bcrypt.check_password_hash(self.password_hash, password.encode("utf-8"))
+    
+
+#     # #  VALIDATIONS
+#     # @validates('username')
+#     # def validate_username(self, key, value):
+#     #     if(1 < len(value)):
+#     #         return value
+#     #     else:
+#     #         raise ValueError("Username must be greater than 1 character")
+
+#     # Add relationship
+#     clipboarditems = db.relationship('ClipboardItem', back_populates = "users")
+
+#     # Add serialization rules
+#     serialize_rules = ('-clipboarditems.users',)
+
+
+
+
+# class ClipboardItem(db.Model, SerializerMixin):
+#     __tablename__ = 'clipboarditems'
+
+#     id = db.Column(db.Integer, primary_key=True)
+#     content = db.Column(db.Text, nullable=False)
+#     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
+#     # is_favorited = db.Column(db.Boolean, default=False)
+#     # keyboard_shortcut = db.Column(db.String, nullable=True)
+#     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+#     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+#     # Correct the back_populates attribute to match the relationship name in ClipboardItemTag
+#     users = db.relationship('User', back_populates='clipboarditems')
+#     tag_clipboarditems = db.relationship('Tag', back_populates='clipboarditem_tags')
+    
+#     # Add serialization rules
+#     serialize_rules = ('-users.clipboarditems', '-tag_clipboarditems.clipboarditem_tags')
+
+
+
+# class Tag(db.Model, SerializerMixin):
+#     __tablename__ = 'tags'
+
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(50), nullable=False)
+#     # user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
+
+#     # Correct the back_populates attribute to match the relationship name in ClipboardItemTag
+#     clipboarditem_tags = db.relationship('ClipboardItem', back_populates='tag_clipboarditems')
+    
+#     # Add serialization rules
+#     serialize_rules = ('-clipboarditem_tags.tag_clipboarditems',)
+
+
+
+
+# class ClipboardItemTag(db.Model, SerializerMixin):
+#     __tablename__ = 'clipboarditemtags'
+
+#     id = db.Column(db.Integer, primary_key=True)
+#     clipboard_item_id = db.Column(db.Integer, db.ForeignKey('clipboarditems.id'), nullable=False)
+#     tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'), nullable=False)
+
+
+#     # Ensure the relationship names are correctly defined
+#     clipboarditem = db.relationship('ClipboardItem', backref='clipboarditem_tags')
+#     tag = db.relationship('Tag', backref='tag_clipboarditems')
+    
+#     # Add serialization rules
+#     serialize_rules = ('-clipboarditem.clipboarditem_tags', '-tag.tag_clipboarditems')
 
 
 # # # w/ overlaps
