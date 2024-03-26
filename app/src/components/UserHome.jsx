@@ -9,11 +9,14 @@ import Explorer from "./Explorer"
 
 function UserHome({ onLogin }) {
     const [clipboardItems, setClipboardItems] = useState([]);
-    const [tags, setTags] = useState([]);
     const [clipItemTags, setClipItemTags] = useState([]);
     const [searchClipboardItems, setSearchClipboardItems] = useState("");
     // const [displayedTagClipboardItems, setDisplayedTagClipboardItems] = useState(clipboardItems);
     const [displayedTagClipboardItems, setDisplayedTagClipboardItems] = useState([]);
+    const [filteredClipboardItems, setFilteredClipboardItems] = useState([]);
+    const [selectedClipboardItem, setSelectedClipboardItem] = useState(null);
+    const [tags, setTags] = useState([]);
+
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -52,10 +55,10 @@ function UserHome({ onLogin }) {
     setClipboardItems(newClipboardItems)
     }
 
-    function deleteTag(id) {
-  const newTags = tags.filter((tag) => tag.id !== id)
-  setTags(newTags)
-  }
+
+    const handleSelect = (clipboardItem) => {
+        setSelectedClipboardItem(clipboardItem);
+    };
 
     const onFavorite = (clipboardItem) => {
     // Implement favorite/assign to keyboard shortcut logic
@@ -81,34 +84,39 @@ function UserHome({ onLogin }) {
 
     })
 
+    console.log(clipboardItems)
+
     // const handleTagClick = (tagId) => {
     //     // Assuming each clipboardItem has a 'tags' property that is an array of tag IDs
-    //     const filteredItems = clipboardItems.filter(clipboardItem => (clipboardItem.tag_clipboarditems?.includes(tagId) ?? false));
-
-    //     setDisplayedTagClipboardItems(filteredItems);
-    //  };
-    //  console.log(displayedTagClipboardItems)
-
-    // const handleTagClick = (tag_id) => {
-    //     setIsLoading(true);
-    //     setError(null);
-    //     fetch(`http://127.0.0.1:5000/clipboarditems/tag/${tag_id}`)
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 throw new Error('Failed to fetch clipboard items');
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(data => {
-    //             setDisplayedTagClipboardItems(data);
-    //             console.log("Updated displayedTagClipboardItems:", data);
-    //             setIsLoading(false);
-    //         })
-    //         .catch(error => {
-    //             setError(error.message);
-    //             setIsLoading(false);
-    //         });
+    //     const filteredItems = clipboardItems.filter(clipboardItem => (clipboardItem.tag?.includes(tagId) ?? false));
+    //     setFilteredClipboardItems(filteredItems);
     // };
+    const handleTagClick = (tagId) => {
+        // Filter clipboardItems where the tag_id matches the selected tag's ID
+        const filteredItems = clipboardItems.filter(clipboardItem => clipboardItem.tag_id === tagId);
+        setFilteredClipboardItems(filteredItems);
+    };
+    console.log(filteredClipboardItems)
+
+    function handleUpdateTag(newTag) {
+        const updatedTags = tags.map((tag) => {
+            if (tag.id === newTag.id) {
+            return newTag
+            } else {
+            return tag
+            }
+        })
+        setTags(updatedTags)
+        }
+
+
+
+
+    function deleteTag(id) {
+        const newTags = tags.filter((tag) => tag.id !== id)
+        setTags(newTags)
+    }
+    
     
     
 
@@ -132,12 +140,30 @@ function UserHome({ onLogin }) {
             <div className="window">
 
                 <div className="finder">
-                    <Finder search={searchClipboardItems} setSearch={setSearchClipboardItems} tags={tags} deleteTag={deleteTag} handleLogout={handleLogout} />
-                    {/* <Finder search={searchClipboardItems} setSearch={setSearchClipboardItems} tags={tags} deleteTag={deleteTag} handleLogout={handleLogout} onTagClick={handleTagClick} /> */}
+                    {/* <Finder search={searchClipboardItems} setSearch={setSearchClipboardItems} tags={tags} deleteTag={deleteTag} handleLogout={handleLogout} /> */}
+                    <Finder search={searchClipboardItems}
+                    setSearch={setSearchClipboardItems}
+                    tags={tags}
+                    deleteTag={deleteTag}
+                    handleLogout={handleLogout}
+                    onTagClick={handleTagClick}
+                    onSelect={handleSelect}
+                    selectedClipboardItem={selectedClipboardItem}
+                    updateTag={handleUpdateTag}
+                    />
                 </div>
 
                 <div className="explorer">
-                    <Explorer clipboardItems={displayedClipboardItems} deleteClipboardItem={deleteClipboardItem} onFavorite={onFavorite} onCopyToClipboard={onCopyToClipboard} />
+                    <Explorer 
+                    // clipboardItems={displayedClipboardItems}
+                    // clipboardItems={filteredClipboardItems.length > 0 ? filteredClipboardItems : displayedClipboardItems}
+                    clipboardItems={filteredClipboardItems.length > 0 ? filteredClipboardItems : clipboardItems}
+                    deleteClipboardItem={deleteClipboardItem}
+                    onFavorite={onFavorite}
+                    onCopyToClipboard={onCopyToClipboard}
+                    onSelect={handleSelect}
+                    selectedClipboardItem={selectedClipboardItem}
+                    />
                     {/* <Explorer clipboardItems={displayedTagClipboardItems} deleteClipboardItem={deleteClipboardItem}/> */}
                 </div>
 
