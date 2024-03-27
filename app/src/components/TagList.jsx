@@ -3,6 +3,8 @@ import TagCard from "./TagCard";
 import NewTagForm from "./NewTagForm";
 
 function TagList({ tags, onTagClick, onSelect, onNewTagFormSubmit, updateTag, deleteTag }) {
+  const [showNewTagForm, setShowNewTagForm] = useState(false);
+
 // console.log(tags)
 
 
@@ -16,13 +18,19 @@ const tagList = tags.map(tag => {
 })
 //  console.log(clipboardItemList)
 
+function handleNewTagFormSubmit(tag) {
+    onNewTagFormSubmit(tag);
+    setShowNewTagForm(false); // Hide form after submission
+ }
+
 
     
     return (
       <ul className="taglist-component">
         <h3>TagList</h3>
         {tagList}
-        <NewTagForm onNewTagFormSubmit={onNewTagFormSubmit} />
+        <button onClick={() => setShowNewTagForm(!showNewTagForm)}>New Tag</button>
+        {showNewTagForm && <NewTagForm onNewTagFormSubmit={handleNewTagFormSubmit} />}
       </ul>
     )
   }

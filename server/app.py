@@ -234,14 +234,23 @@ api.add_resource(getOneClipboardItem,'/clipboarditems/<int:id>')
 
 class SaveClipboard(Resource):
     def post(self):
+        # if "user_id" not in session:
+        #     return "User not logged in", 401
+        
         data = request.get_json()
-        # print(data)
-        # print(session["user_id"])
+        print(data)
+        print(session["user_id"])
         if data is None:
             return 'Bad Request', 400
         content = data.get('content')
         if content is None:
             return 'Bad Request', 400
+        
+
+        # user_id = session.get("user_id")
+        # if user_id is None:
+        #     return "User not logged in", 401
+        
         # image
         if content.startswith('data:image/png;base64,'):
             image_data = content.split(',')[1]
@@ -257,6 +266,7 @@ class SaveClipboard(Resource):
         # text
         else:
             new_content = ClipboardItem(content=content)
+            # new_content = ClipboardItem(content=content, user_id=user_id)
             db.session.add(new_content)
             db.session.commit()
         return 'Content saved', 201
@@ -420,7 +430,7 @@ class getAllTags(Resource):
         try:
             data = request.get_json()
             tag_name = data['name']
-            # user_id = data['user_id']
+            user_id = data['user_id']
             tag_color = data['color']
             
             common_tags = ["Text", "Image", "Email", "File", "Code"]
@@ -432,8 +442,8 @@ class getAllTags(Resource):
                     db.session.commit()
             else:
                 # tag = Tag(name=tag_name)
-                tag = Tag(name=tag_name, color=tag_color)
-                # tag = Tag(name=tag_name, color=tag_color, user_id=user_id)
+                # tag = Tag(name=tag_name, color=tag_color)
+                tag = Tag(name=tag_name, color=tag_color, user_id=user_id)
                 db.session.add(tag)
                 db.session.commit()
             

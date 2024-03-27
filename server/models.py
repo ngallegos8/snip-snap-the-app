@@ -80,7 +80,7 @@ class ClipboardItem(db.Model, SerializerMixin):
     content = db.Column(db.Text, nullable=False)
     is_favorited = db.Column(db.Boolean, default=False)
     keyboard_shortcut = db.Column(db.String, nullable=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
     tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'))
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)

@@ -9,14 +9,17 @@ function NewTagForm({ onNewTagFormSubmit }) {
   function handleColorSelect(color) {
     setTagColor(color);
  }
-  
 
+  
   function handleSubmit(e) {
     e.preventDefault()
 
+    const user_id = sessionStorage.getItem("user_id");
+    // const user_id = session["user_id"];
+
     const newTag = {
         name: tagName,
-        // user_id: 
+        user_id: user_id,
         color: tagColor
     }
     fetch("/tags", {
@@ -38,13 +41,11 @@ function NewTagForm({ onNewTagFormSubmit }) {
 }
 
   return (
-    <div className="new-tag-form" onSubmit={handleSubmit}>
-      <h2 className='form-title'>New Tag</h2>
-      <form>
-        <input type="text" name="name" value={tagName} onChange={(e) => setTagName(e.target.value)}/>
-        {/* <input type="text" name="color" value={tagColor} onChange={(e) => setTagColor(e.target.value)}/> */}
+    <div className="new-tag-form">
+      <form onSubmit={handleSubmit}>
+        <input type="text" name="name" value={tagName} onChange={(e) => setTagName(e.target.value)} />
         <ColorSelector onColorSelect={handleColorSelect} />
-        {/* <button type="submit">Create Tag</button> */}
+        <button type="submit">Create Tag</button>
       </form>
     </div>
   );
