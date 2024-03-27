@@ -4,6 +4,7 @@ import os
 import base64
 import AppKit
 import requests
+from server.app import *
 
 class ClipboardMonitor:
     def __init__(self):

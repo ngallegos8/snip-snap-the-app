@@ -2,6 +2,8 @@ import React, {useState, useEffect } from "react";
 // import { useHistory } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 
 function UserLogin( {onLogin}) {
@@ -9,20 +11,10 @@ function UserLogin( {onLogin}) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
-    //const [errors, setErrors] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    // const history = useHistory()
+    const [showPassword, setShowPassword] = useState(false);
+
     const navigate = useNavigate();
-
-
-    // useEffect(() => {
-
-    //     fetch("http://127.0.0.1:5000/check_session").then((r) => {
-    //       if (r.ok) {
-    //         r.json().then((user) => setUser(user));
-    //       }
-    //     });
-    //   }, []);
     
 
     function handleSubmit(e) {
@@ -46,7 +38,7 @@ function UserLogin( {onLogin}) {
         .then((user) => {
             onLogin(user.username, user.password, user.email);
             // Redirect to UserHome after successful login
-            navigate("/UserHome"); // Assuming the route for UserHome is '/UserHome'
+            navigate("/UserHome");
           })
           .catch((error) => {
             console.error("Login failed:", error);
@@ -55,76 +47,43 @@ function UserLogin( {onLogin}) {
     
       return(
         <div className="user-login">
+          <div className="snip-snap-logo">
+            <h1>Snip-Snap</h1>
+            <p>Stay Clipped In</p>
+          </div>
           <div className="header-top"></div>
             <form onSubmit={handleSubmit}>
-              <h1 className="form-title">Log in to Snip-Snap</h1>
+              <h1 className="form-title">Welcome</h1>
 
-                <label>Enter Username </label>
-                <input value={username} onChange={(e) => setUsername(e.target.value)}></input>
+                <label>Username</label>
+                <input value={username}
+                       onChange={(e) => setUsername(e.target.value)}
+                       placeholder="Enter your username">
+                </input><br></br>
+                <p>-OR-</p>
+                <label>Email </label>
+                <input value={email}
+                       onChange={(e) => setEmail(e.target.value)}
+                       placeholder="Enter your email">
+                </input><br></br><br></br>
 
-                <label>Enter Password </label>
-                <input value={password} onChange={(e) => setPassword(e.target.value)}></input>
-                
-                <label>Enter Email </label>
-                <input value={email} onChange={(e) => setEmail(e.target.value)}></input>
-                
-              <button type="submit">Log In</button>
+                <label>Password </label>
+                <div className="password-input-wrapper">
+                    <input type={showPassword ? "text" : "password"}
+                           value={password} onChange={(e) => setPassword(e.target.value)}
+                           placeholder="Enter your password">
+                    </input>
+                    <button type="button" onClick={() => setShowPassword(!showPassword)}>
+                        <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                    </button>
+                </div><br></br>
 
-              <p className='user-signup-link'>Sign Up Instead <Link to="/signup">Sign up</Link></p>
+              <button type="submit">Log In</button><br></br><br></br>
+
+              <p className='user-signup-link'>Don't have an account? <Link to="/signup">Sign up</Link></p>
             </form>
           </div>
       );
 };
 
 export default UserLogin;
-
-
-
-
-// import React, {useState, useEffect } from "react";
-// // import { useHistory } from "react-router-dom";
-// import { useNavigate } from 'react-router-dom';
-// import { Link } from 'react-router-dom';
-
-
-// function Login( {onLogin}) {
-//     const [username, setUsername] = useState("");
-//     const [password, setPassword] = useState("");
-//     const [email, setEmail] = useState("");
-//     //const [errors, setErrors] = useState([]);
-//     const [isLoading, setIsLoading] = useState(false);
-//     // const history = useHistory()
-//     // const navigate = useNavigate();
-//     // const [user, setUser] = useState(null);
-
-//     function handleSubmit(e) {
-//         e.preventDefault();
-//         setIsLoading(true);
-//         fetch("http://127.0.0.1:5000/login", {
-//           method: "POST",
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//           body: JSON.stringify({ username, password, email }),
-//         }).then((r) => {
-//           setIsLoading(false);
-//           if (r.ok) {
-//             r.json().then((user) => onLogin(user));
-//           } 
-//         });
-//       }
-    
-//       return(
-//         <form onSubmit={handleSubmit}>
-//           <label>username</label>
-//           <input value={username} onChange={(e) => setUsername(e.target.value)}></input>
-//           <label>password</label>
-//           <input value={password} onChange={(e) => setPassword(e.target.value)}></input>
-//           <label>email</label>
-//           <input value={email} onChange={(e) => setEmail(e.target.value)}></input>
-//           <button type="submit">Log In</button>
-//         </form>
-//       )
-// }
-
-// export default Login;

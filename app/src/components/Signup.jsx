@@ -1,23 +1,19 @@
 import React, {useEffect, useState} from "react";
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 function Signup({ onLogin }) {
     const [user, setUser] = useState(null)
-    const [name, setName] = useState("")
+    const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+
     const navigate = useNavigate();
 
-    // useEffect(() => {
-
-    //     fetch("http://127.0.0.1:5000/check_session").then((r) => {
-    //       if (r.ok) {
-    //         r.json().then((user) => setUser(user));
-    //       }
-    //     });
-    //   }, []);
 
 
     function handleSignup(e){
@@ -27,7 +23,7 @@ function Signup({ onLogin }) {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
-                username: name,
+                username: username,
                 password: password,
                 email: email
             })
@@ -44,7 +40,7 @@ function Signup({ onLogin }) {
           .then((user) => {
               onLogin(user.username, user.password, user.email);
               // Redirect to UserHome after successful login
-              navigate("/UserHome"); // Assuming the route for UserHome is '/UserHome'
+              navigate("/UserHome");
             })
             .catch((error) => {
               console.error("Login failed:", error);
@@ -52,23 +48,46 @@ function Signup({ onLogin }) {
     }
 
     return (
-        <div className="user-signup">
-            <div className="header-top"></div>
-                <h1>New User Account</h1>
-                <form onSubmit={handleSignup}>
-                        <label>Enter Username </label>
-                        <input type="text" value={name} onChange={(e) => setName(e.target.value)}></input><p></p>
+      <div className="user-signup">
+          <div className="header-top"></div>
+            <form onSubmit={handleSignup}>
+              <h1 className="form-title">Sign Up</h1>
 
-                        <label>Enter Password </label>
-                        <input type="text" value={password} onChange={(e) => setPassword(e.target.value)}></input><p></p>
+                <label>Username</label>
+                <input value={username}
+                       onChange={(e) => setUsername(e.target.value)}
+                       placeholder="Create a username">
+                </input><br></br><br></br>
 
-                        <label>Enter Email </label>
-                        <input value={email} onChange={(e) => setEmail(e.target.value)}></input>
-                        <br></br> <br></br>
+                <label>Password </label>
+                <div className="password-input-wrapper">
+                    <input type={showPassword ? "text" : "password"}
+                           value={password} onChange={(e) => setPassword(e.target.value)}
+                           placeholder="Create your password">
+                    </input>
+                    <button type="button" onClick={() => setShowPassword(!showPassword)}>
+                        <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                    </button>
+                </div><br></br><br></br>
 
-                        <button type="submit">Log In</button>
-                </form>
+                <label>Email </label>
+                <input value={email}
+                       onChange={(e) => setEmail(e.target.value)}
+                       placeholder="Enter your email">
+                </input><br></br><br></br>
+
+              <button type="submit">Log In</button><br></br><br></br>
+
+              <p className='user-signup-link'>Back to <Link to="/">Login</Link></p>
+              
+            </form>
+            <div className="snip-snap-logo">
+              <h1>Snip-Snap</h1>
+              <p>Get Clipped In</p>
+             </div>
         </div>
+        
+
     );
 };
 
