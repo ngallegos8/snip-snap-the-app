@@ -29,7 +29,7 @@ function UserHome({ onLogin }) {
     // console.log(clipboardItems)
     
     useEffect(() => {
-        fetch("/clipboarditems")
+        fetch("http://127.0.0.1:5000/clipboarditems")
         .then(response => response.json())
         .then(setClipboardItems)
     }, [])
@@ -37,7 +37,7 @@ function UserHome({ onLogin }) {
 
     
     useEffect(() => {
-      fetch("/tags")
+      fetch("http://127.0.0.1:5000/tags")
       .then(response => response.json())
       .then(setTags)
   }, [])
@@ -152,7 +152,7 @@ function UserHome({ onLogin }) {
 
     function handleLogout() {
         alert("See you next time!");
-        fetch("/logout", {
+        fetch("http://127.0.0.1:5000/logout", {
             method: "DELETE"
         })
         .then(() => {

@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { Route, Routes, HashRouter } from "react-router-dom";
 import UserHome from './UserHome'
 import Signup from'./Signup'
 import Login from './Login'
@@ -11,7 +11,7 @@ function App() {
 
   useEffect(() => {
     // console.log("HELP")
-    fetch("/check_session").then((r) => {
+    fetch("http://127.0.0.1:5000/check_session").then((r) => {
       console.log(r)
       if (r.ok) {
         r.json().then((user) => setUser(user));
@@ -26,7 +26,7 @@ function App() {
 
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       {/* <NavBar /> */}
       <Routes>
         {/* <Route path="/" element={<Home />} /> */}
@@ -36,7 +36,7 @@ function App() {
       
         {/* Add other routes as needed */}
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
  );
 
 }

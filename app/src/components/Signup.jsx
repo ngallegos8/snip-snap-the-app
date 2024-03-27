@@ -19,7 +19,7 @@ function Signup({ onLogin }) {
     function handleSignup(e){
         e.preventDefault();
         setIsLoading(true);
-        fetch("/signup", {
+        fetch("http://127.0.0.1:5000/signup", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({

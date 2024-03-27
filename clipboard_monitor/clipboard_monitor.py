@@ -1,12 +1,11 @@
 import time
-import subprocess 
 import os
 import base64
 import AppKit
 import requests
-from app import *
-from flask import Flask, session
-# from flask import RequestContext
+# from app import *
+# from flask import Flask, session
+# # from flask import RequestContext
 
 
 class ClipboardMonitor:
@@ -78,15 +77,15 @@ class ClipboardMonitor:
     def save_text(self):
         text = self.pasteboard.stringForType_(AppKit.NSStringPboardType)
         data = {'content': text}
-        with app.test_request_context():
+        # with app.test_request_context():
            
-            if "user_id" in session:
-                user_id = session["user_id"]
+        #     if "user_id" in session:
+        #         user_id = session["user_id"]
 
-                print("asdf")
-                print(user_id)
-            else:
-                print("None")
+        #         print("asdf")
+        #         print(user_id)
+            # else:
+            #     print("None")
         response = requests.post('http://localhost:5000/save_clipboard', json=data)
         if response.status_code == 201:
             print("Text saved successfully.")
@@ -96,38 +95,3 @@ class ClipboardMonitor:
 if __name__ == "__main__":
     monitor = ClipboardMonitor()
     monitor.run()
-
-
-
-    # def save_file(self):
-    #     file_url = self.pasteboard.propertyListForType_(AppKit.NSFilenamesPboardType)
-    #     if file_url:
-    #         # Assuming you want to save the file to the current directory
-    #         # You can change the destination path as needed
-    #         destination_path = os.path.expanduser('~/Desktop/clipboard_files/')
-    #         os.makedirs(destination_path, exist_ok=True) # Ensure the directory exists
-    #         file_path = file_url[0] # Assuming the first URL is the one you want to save
-    #         file_name = os.path.basename(file_path)
-    #         destination_file_path = os.path.join(destination_path, file_name)
-            
-    #         # Use subprocess to copy the file
-    #         subprocess.run(['cp', '-R', file_path, destination_file_path])
-    #         print(f"File saved to {destination_file_path}")
-    #     else:
-    #         print("No file found in clipboard.")
-
-    # def save_image(self):
-    #     image_data = self.pasteboard.dataForType_(AppKit.NSPasteboardTypePNG)
-    #     if image_data:
-    #         # Assuming you want to save the image to the current directory
-    #         # You can change the destination path as needed
-    #         destination_path = os.path.expanduser('~/Desktop/clipboard_images/')
-    #         os.makedirs(destination_path, exist_ok=True) # Ensure the directory exists
-            
-    #         # Save the image data to a file
-    #         image_file_path = os.path.join(destination_path, 'clipboard_image.png')
-    #         with open(image_file_path, 'wb') as f:
-    #             f.write(image_data)
-    #         print(f"Image saved to {image_file_path}")
-    #     else:
-    #         print("No image found in clipboard.")

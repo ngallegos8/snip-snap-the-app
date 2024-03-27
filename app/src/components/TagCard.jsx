@@ -22,7 +22,7 @@ function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect, isSelected }
   function handleEditTag(e) {
     e.preventDefault();
 
-    fetch(`/tags/${tag.id}`, {
+    fetch(`http://127.0.0.1:5000/tags/${tag.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json"
@@ -50,7 +50,7 @@ function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect, isSelected }
 };
 
   function handleDelete() {
-    fetch(`/tags/${tag.id}`, {
+    fetch(`http://127.0.0.1:5000/tags/${tag.id}`, {
       method: "DELETE"
     })
     .then(() => deleteTag(tag.id))

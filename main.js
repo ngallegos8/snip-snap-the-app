@@ -11,10 +11,19 @@ function createMainWindow() {
 
     mainWindow.webContents.openDevTools()
 
+    // const startUrl = url.format({
+    //     pathname: path.join(__dirname, 'app/build/index.html'),
+    //     // pathname: path.join(__dirname, '/Users/nicholasgallegos/Development/Code/Phase-5/electronapp/app/build/index.html'),
+    //     protocol: 'file',
+    // });
+
+    const appPath = app.getAppPath();
     const startUrl = url.format({
-        pathname: path.join(__dirname, './app/build/index.html'),
+        pathname: path.join(appPath, 'app/build/index.html'),
         protocol: 'file',
     });
+
+    console.log('Start URL:', startUrl); // Add this line
 
     mainWindow.loadURL(startUrl);
     // mainWindow.loadFile('./app/src/index.js')

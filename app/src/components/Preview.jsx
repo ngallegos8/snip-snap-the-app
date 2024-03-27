@@ -8,7 +8,7 @@ function Preview ({ selectedClipboardItem, deleteClipboardItem, tags, updateAssi
 
     const [tag, setTag] = useState([])
     useEffect(()=>{
-        fetch(`/tags/${selectedClipboardItem?.tag_id}`)
+        fetch(`http://127.0.0.1:5000/tags/${selectedClipboardItem?.tag_id}`)
         .then(res => res.json())
         .then(data => setTag(data))
     },[selectedClipboardItem])

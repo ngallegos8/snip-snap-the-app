@@ -55,7 +55,7 @@ function Controls({ selectedClipboardItem, deleteClipboardItem, tags, updateAssi
             return;
         }
     
-        fetch(`/clipboarditems/${selectedClipboardItem.id}`, {
+        fetch(`http://127.0.0.1:5000/clipboarditems/${selectedClipboardItem.id}`, {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json"
@@ -102,7 +102,7 @@ const handleCopyToClipboard = () => {
 };
 
   function handleDelete() {
-    fetch(`/clipboarditems/${selectedClipboardItem.id}`, {
+    fetch(`http://127.0.0.1:5000/clipboarditems/${selectedClipboardItem.id}`, {
       method: "DELETE"
     })
     deleteClipboardItem(selectedClipboardItem.id)
