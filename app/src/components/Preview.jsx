@@ -19,11 +19,17 @@ function Preview ({ selectedClipboardItem, deleteClipboardItem, tags, updateAssi
             <h3>Preview</h3>
 
             <div className="controls">
-                <Controls selectedClipboardItem={selectedClipboardItem} deleteClipboardItem={deleteClipboardItem} tags={tags} updateAssignTag={updateAssignTag} onFavorite={onFavorite} onCopyToClipboard={onCopyToClipboard} />
+                <Controls selectedClipboardItem={selectedClipboardItem}
+                          deleteClipboardItem={deleteClipboardItem}
+                          tags={tags}
+                          updateAssignTag={updateAssignTag}
+                          onFavorite={onFavorite}
+                          onCopyToClipboard={onCopyToClipboard} />
             </div>
 
             <div className="displaypreview">
-                <DisplayPreview selectedClipboardItem={selectedClipboardItem} tag = {tag}/>
+                <DisplayPreview selectedClipboardItem={selectedClipboardItem}
+                                tag={tag}/>
             </div>
     
         </div>

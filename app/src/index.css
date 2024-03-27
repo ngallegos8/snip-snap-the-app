@@ -24,3 +24,19 @@ code {
   width: 10px;
   height: 10px;
 }
+
+.message {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.message.success {
+  background-color: #dff0d8; /* Light green */
+  color: #3c763d; /* Dark green */
+}
+
+.message.error {
+  background-color: #f2dede; /* Light red */
+  color: #a94442; /* Dark red */
+}

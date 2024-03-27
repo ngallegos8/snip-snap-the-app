@@ -20,9 +20,10 @@ function DisplayPreview({ selectedClipboardItem, tag }) {
       // Handle file preview, possibly by displaying a download link or an embedded file viewer
       content = <a href={selectedClipboardItem.content} download>Download File</a>;
   }
-
 //   const tagName = selectedClipboardItem.tag_id ? selectedClipboardItem.tags : 'No tag';
 //   console.log(selectedClipboardItem)
+
+const tagName = selectedClipboardItem.tag_id ? tag.name : 'No tag';
 
 
 
@@ -30,13 +31,20 @@ function DisplayPreview({ selectedClipboardItem, tag }) {
 
 
   return (
-      <div className="displaypreview-component">
+    <div className="displaypreview-component">
           <h3>DisplayPreview</h3>
           {selectedClipboardItem.content}
-          {/* {selectedClipboardItem.tagName} */}
-          {/* {content} */}
-          Tag: {tag.name}
-      </div>
+          Tag: {tagName}
+    </div>
+
+
+    //   <div className="displaypreview-component">
+    //       <h3>DisplayPreview</h3>
+    //       {selectedClipboardItem.content}
+    //       {/* {selectedClipboardItem.tagName} */}
+    //       {/* {content} */}
+    //       Tag: {tag.name}
+    //   </div>
   );
 }
 

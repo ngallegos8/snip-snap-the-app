@@ -18,10 +18,16 @@ function Explorer({ clipboardItems, deleteClipboardItem, tags, updateAssignTag, 
         <div className="explorer-component">
             <h1>Explorer</h1>
             <div className="clipitemlist">
-                <ClipItemList clipboardItems={clipboardItems} deleteClipboardItem={deleteClipboardItem} onSelect={onSelect} />
+                <ClipItemList clipboardItems={clipboardItems} 
+                              onSelect={onSelect} />
             </div>
             <div className="preview">
-                <Preview selectedClipboardItem={selectedClipboardItem} deleteClipboardItem={deleteClipboardItem} tags={tags} updateAssignTag={updateAssignTag} onFavorite={onFavorite} onCopyToClipboard={onCopyToClipboard} />
+                <Preview selectedClipboardItem={selectedClipboardItem}
+                         deleteClipboardItem={deleteClipboardItem}
+                         tags={tags}
+                         updateAssignTag={updateAssignTag}
+                         onFavorite={onFavorite}
+                         onCopyToClipboard={onCopyToClipboard} />
             </div>
         </div>
     )
