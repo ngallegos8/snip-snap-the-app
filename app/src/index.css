@@ -40,3 +40,7 @@ code {
   background-color: #f2dede; /* Light red */
   color: #a94442; /* Dark red */
 }
+
+.tagcard-component.selected {
+  background-color: #f0f0f0; /* Example background color for selected state */
+ }

@@ -7,7 +7,7 @@ import deleteIcon from '../images/delete.png';
 
 
 
-function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect }) {
+function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect, isSelected }) {
   const [tagName, setTagName] = useState(tag.name)
   const [tagColor, setTagColor] = useState(tag.color)
   const [showUpdateForm, setShowUpdateForm] = useState(false);
@@ -70,7 +70,7 @@ function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect }) {
 
     
     return (
-      <li className="tagcard-component">
+      <li className={`tagcard-component ${isSelected ? 'selected' : ''}`}>
           <button className="tag-name-btn" style={{ color: tag.color }} onClick={() => handleTagClick()}>{tag.id} {tag.name}</button>
           <div
             style={{

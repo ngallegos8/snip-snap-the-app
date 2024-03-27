@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import TagCard from "./TagCard";
 import NewTagForm from "./NewTagForm";
 
-function TagList({ tags, onTagClick, onSelect, onNewTagFormSubmit, updateTag, deleteTag }) {
+function TagList({ tags, onTagClick, onSelect, onNewTagFormSubmit, updateTag, selectedTagId, deleteTag }) {
   const [showNewTagForm, setShowNewTagForm] = useState(false);
 
 // console.log(tags)
@@ -14,7 +14,9 @@ const tagList = tags.map(tag => {
                   updateTag={updateTag}
                   deleteTag={deleteTag}
                   onTagClick={onTagClick}
-                  onSelect={onSelect}/>  
+                  onSelect={onSelect}
+                  isSelected={selectedTagId === tag.id}
+          />  
 })
 //  console.log(clipboardItemList)
 

@@ -16,6 +16,8 @@ function UserHome({ onLogin }) {
     const [filteredClipboardItems, setFilteredClipboardItems] = useState([]);
     const [selectedClipboardItem, setSelectedClipboardItem] = useState(null);
     const [tags, setTags] = useState([]);
+    const [selectedTagId, setSelectedTagId] = useState(null);
+
 
 
     const [isLoading, setIsLoading] = useState(false);
@@ -97,18 +99,33 @@ function UserHome({ onLogin }) {
     })
     console.log(clipboardItems)
 
+    // OLD
     // const handleTagClick = (tagId) => {
     //     // Assuming each clipboardItem has a 'tags' property that is an array of tag IDs
     //     const filteredItems = clipboardItems.filter(clipboardItem => (clipboardItem.tag?.includes(tagId) ?? false));
     //     setFilteredClipboardItems(filteredItems);
     // };
 
+    // const handleTagClick = (tagId) => {
+    //     // Filter clipboardItems where the tag_id matches the selected tag's ID
+    //     const filteredItems = clipboardItems.filter(clipboardItem => clipboardItem.tag_id === tagId);
+    //     setFilteredClipboardItems(filteredItems);
+    // };
+    // console.log(filteredClipboardItems)
+
     const handleTagClick = (tagId) => {
-        // Filter clipboardItems where the tag_id matches the selected tag's ID
-        const filteredItems = clipboardItems.filter(clipboardItem => clipboardItem.tag_id === tagId);
-        setFilteredClipboardItems(filteredItems);
+        if (selectedTagId === tagId) {
+            // If the same tag is clicked again, display all clipboard items
+            setFilteredClipboardItems([]);
+            setSelectedTagId(null);
+        } else {
+            // Filter clipboardItems where the tag_id matches the selected tag's ID
+            const filteredItems = clipboardItems.filter(clipboardItem => clipboardItem.tag_id === tagId);
+            setFilteredClipboardItems(filteredItems);
+            setSelectedTagId(tagId);
+        }
     };
-    console.log(filteredClipboardItems)
+    
 
     function handleNewTagFormSubmit(newTag) {
         setTags([...tags, newTag])
@@ -163,6 +180,7 @@ function UserHome({ onLogin }) {
                     selectedClipboardItem={selectedClipboardItem}
                     onNewTagFormSubmit={handleNewTagFormSubmit}
                     updateTag={handleUpdateTag}
+                    selectedTagId={selectedTagId}
                     // onLogin={onLogin}
                     />
                 </div>
