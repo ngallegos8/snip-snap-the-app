@@ -4,7 +4,10 @@ import os
 import base64
 import AppKit
 import requests
-from server.app import *
+from app import *
+from flask import Flask, session
+# from flask import RequestContext
+
 
 class ClipboardMonitor:
     def __init__(self):
@@ -75,6 +78,15 @@ class ClipboardMonitor:
     def save_text(self):
         text = self.pasteboard.stringForType_(AppKit.NSStringPboardType)
         data = {'content': text}
+        with app.test_request_context():
+           
+            if "user_id" in session:
+                user_id = session["user_id"]
+
+                print("asdf")
+                print(user_id)
+            else:
+                print("None")
         response = requests.post('http://localhost:5000/save_clipboard', json=data)
         if response.status_code == 201:
             print("Text saved successfully.")
