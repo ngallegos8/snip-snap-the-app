@@ -5,7 +5,7 @@ from sqlalchemy import MetaData
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
 from datetime import datetime
-
+from email_validator import validate_email, EmailNotValidError
 from flask_bcrypt import Bcrypt
 
 bcrypt = Bcrypt()
@@ -21,7 +21,7 @@ metadata = MetaData(naming_convention={
 db = SQLAlchemy(metadata=metadata)
 
 
-class User(db.Model):
+class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(25), unique=True, nullable=False)
@@ -54,21 +54,27 @@ class User(db.Model):
             "email": self.email
         }
 
-    
-
-    # #  VALIDATIONS
-    # @validates('username')
-    # def validate_username(self, key, value):
-    #     if(1 < len(value)):
-    #         return value
-    #     else:
-    #         raise ValueError("Username must be greater than 1 character")
+    #  VALIDATIONS
+    @validates('username')
+    def validate_username(self, key, value):
+        if(1 < len(value) < 25):
+            return value
+        else:
+            raise ValueError("Username must be between 1 and 25 characters")
+        
+    @validates('email')
+    def validate_email(self, key, value):
+        try:
+            v = validate_email(value)
+            return v.email
+        except EmailNotValidError as e:
+            raise ValueError("Invalid email address") from e
 
     clipboard_items = db.relationship('ClipboardItem', back_populates='users')
     serialize_rules = ('-clipboard_items.users',)
 
 
-class ClipboardItem(db.Model):
+class ClipboardItem(db.Model, SerializerMixin):
     __tablename__ = 'clipboard_items'
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
@@ -87,7 +93,7 @@ class ClipboardItem(db.Model):
             "is_favorited": self.is_favorited,
             "keyboard_shortcut": self.keyboard_shortcut,
             "user_id": self.user_id,
-            "tag_id": self.tag_id
+            "tag_id": self.tag_id,
         }
 
 
@@ -95,17 +101,19 @@ class ClipboardItem(db.Model):
     tags = db.relationship('Tag', back_populates='clipboard_items')
     serialize_rules = ('-users.clipboard_items', 'tag.clipboard_items')
 
-class Tag(db.Model):
+class Tag(db.Model, SerializerMixin):
     __tablename__ = 'tags'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
+    color = db.Column(db.String(7), nullable=True) # Color codes are in the format #RRGGBB
 
     def to_dict(self):
         return {
             "id": self.id,
             "name": self.name,
-            "user_id": self.user_id
+            "user_id": self.user_id,
+            "color": self.color
         }
 
     clipboard_items = db.relationship('ClipboardItem', back_populates='tags')

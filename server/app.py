@@ -421,21 +421,21 @@ class getAllTags(Resource):
             data = request.get_json()
             tag_name = data['name']
             # user_id = data['user_id']
-            # tag_color = data['color']
+            tag_color = data['color']
             
-            # common_tags = ["Text", "Image", "Email", "File", "Code"]
-            # if tag_name in common_tags:
-            #     tag = Tag.query.filter(Tag.name == tag_name).first()
-            #     if not tag:
-            #         tag = Tag(name=tag_name)
-            #         db.session.add(tag)
-            #         db.session.commit()
-            # else:
-
-            tag = Tag(name=tag_name)
-            # tag = Tag(name=tag_name, color=tag_color, user_id=user_id)
-            db.session.add(tag)
-            db.session.commit()
+            common_tags = ["Text", "Image", "Email", "File", "Code"]
+            if tag_name in common_tags:
+                tag = Tag.query.filter(Tag.name == tag_name).first()
+                if not tag:
+                    tag = Tag(name=tag_name)
+                    db.session.add(tag)
+                    db.session.commit()
+            else:
+                # tag = Tag(name=tag_name)
+                tag = Tag(name=tag_name, color=tag_color)
+                # tag = Tag(name=tag_name, color=tag_color, user_id=user_id)
+                db.session.add(tag)
+                db.session.commit()
             
             return tag.to_dict(), 201
         except Exception as e:
@@ -448,9 +448,10 @@ api.add_resource(getAllTags,'/tags')
 class getOneTag(Resource):
 
     def get(self,id):
-        tag = Tag.query.filter(Tag.id == id).first()
+        tag = Tag.query.filter(Tag.id == id).all()
+        all_tags = [t.to_dict() for t in tag]
         if(tag):
-            return tag.to_dict(only=("name", "user_id")), 200
+            return all_tags, 200
         else:
             return {
                 "error": "Tag not found"

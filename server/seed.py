@@ -36,8 +36,8 @@ with app.app_context():
     db.session.add(nick)
 
     # Create new ClipboardItem instances
-    item1 = ClipboardItem(content="STEPHEN", user_id=1, tag_id=1)
-    item2 = ClipboardItem(content="DAVID", user_id=2, tag_id=1)
+    item1 = ClipboardItem(content="STEPHEN", user_id=1, tag_id=1, is_favorited=True)
+    item2 = ClipboardItem(content="DAVID", user_id=2, tag_id=1, is_favorited=True)
     item3 = ClipboardItem(content="NICK", user_id=3, tag_id=1)
     item4 = ClipboardItem(content="ABC", user_id=1, tag_id=3)
     item5 = ClipboardItem(content="Abc", user_id=2, tag_id=3)

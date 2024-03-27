@@ -1,8 +1,8 @@
-"""nnn
+"""nnnn
 
-Revision ID: 31d1a77e7fc2
+Revision ID: 3f5fbd94c9a9
 Revises: 
-Create Date: 2024-03-26 11:57:57.257647
+Create Date: 2024-03-27 05:23:13.601239
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '31d1a77e7fc2'
+revision = '3f5fbd94c9a9'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -33,6 +33,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=50), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('color', sa.String(length=7), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], name=op.f('fk_tags_user_id_users')),
     sa.PrimaryKeyConstraint('id', name=op.f('pk_tags'))
     )
@@ -41,7 +42,7 @@ def upgrade():
     sa.Column('content', sa.Text(), nullable=False),
     sa.Column('is_favorited', sa.Boolean(), nullable=True),
     sa.Column('keyboard_shortcut', sa.String(), nullable=True),
-    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('tag_id', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),

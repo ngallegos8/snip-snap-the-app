@@ -5,7 +5,13 @@ import DisplayPreview from "./DisplayPreview";
 
 
 function Preview ({ selectedClipboardItem, deleteClipboardItem, tags, updateAssignTag, onFavorite, onCopyToClipboard }) {
-    
+
+    const [tag, setTag] = useState([])
+    useEffect(()=>{
+        fetch(`/tags/${selectedClipboardItem?.tag_id}`)
+        .then(res => res.json())
+        .then(data => setTag(data))
+    },[selectedClipboardItem])
 
     
     return (
@@ -17,7 +23,7 @@ function Preview ({ selectedClipboardItem, deleteClipboardItem, tags, updateAssi
             </div>
 
             <div className="displaypreview">
-                <DisplayPreview selectedClipboardItem={selectedClipboardItem}/>
+                <DisplayPreview selectedClipboardItem={selectedClipboardItem} tag = {tag}/>
             </div>
     
         </div>

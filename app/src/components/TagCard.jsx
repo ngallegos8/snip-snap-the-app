@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import ColorSelector from "./ColorSelector";
+
 import updateIcon from '../images/update-icon.png';
 import uneditIcon from '../images/unedit-icon.png';
 import deleteIcon from '../images/delete.png';
@@ -13,6 +15,10 @@ function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect }) {
 
   console.log(tag)
 
+  function handleColorSelect(color) {
+    setTagColor(color);
+ }
+
   function handleEditTag(e) {
     e.preventDefault();
 
@@ -22,8 +28,8 @@ function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect }) {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            name: tagName
-        //   color: tagColor
+            name: tagName,
+            color: tagColor
         })
       })
       .then(response => {
@@ -34,7 +40,7 @@ function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect }) {
       })
       .then(updatedTagData => {
         setTagName(updatedTagData.name);
-        // setTagColor(updatedTagData.color);
+        setTagColor(updatedTagData.color);
 
         updateTag(updatedTagData);
       })
@@ -65,7 +71,17 @@ function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect }) {
     
     return (
       <li className="tagcard-component">
-          <button className="tag-name-btn" onClick={() => handleTagClick()}>{tag.id} {tag.name}</button>
+          <button className="tag-name-btn" style={{ color: tag.color }} onClick={() => handleTagClick()}>{tag.id} {tag.name}</button>
+          <div
+            style={{
+              display: "inline-block",
+              width: "10px",
+              height: "10px",
+              backgroundColor: tag.color || "transparent", // Use transparent if no color is set
+              borderRadius: "50%",
+              marginLeft: "5px",
+            }}
+          />
           <button className="show-update-form-button" onClick={() => setShowUpdateForm(!showUpdateForm)}>
             {showUpdateForm ? <img src={uneditIcon} alt="Unedit Tag" className="unedit-img"/> : <img src={updateIcon} alt="Update Tag" className="edit-img"/>}
           </button>
@@ -77,6 +93,7 @@ function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect }) {
                 <input type="text" name="name" value={tagName} onChange={(e) => setTagName(e.target.value)}/>
                 {/* <label>Update Tag Color:</label>
                 <input type="text" name="color" value={tagColor} onChange={(e) => setTagColor(e.target.value)}/> */}
+                <ColorSelector onColorSelect={handleColorSelect} />
                 <button type="submit">Save Changes</button>
               </form>
             </div>

@@ -6,15 +6,25 @@ import deleteIcon from '../images/delete.png';
 
 function Controls({ selectedClipboardItem, deleteClipboardItem, tags, updateAssignTag, onFavorite, onCopyToClipboard }) {
     const [clipItemTag, setClipItemTag] = useState(selectedClipboardItem)
+    const [selectedTag, setSelectedTag] = useState(null);
     const [showUpdateTagForm, setShowUpdateTagForm] = useState(false);
 
   const handleFavorite = () => {
       // Implement favorite/assign to keyboard shortcut logic
       onFavorite(selectedClipboardItem);
-  };
+    };
+
+  const handleTagSelection = (tag) => {
+    setSelectedTag(tag);
+    handleAssignTag();
+    };  
 
     function handleAssignTag(e) {
-        e.preventDefault();
+        // e.preventDefault();
+        if (!selectedTag) {
+            console.error('No tag selected');
+            return;
+        }
     
         fetch(`/clipboarditems/${selectedClipboardItem.id}`, {
             method: "PATCH",
@@ -22,7 +32,7 @@ function Controls({ selectedClipboardItem, deleteClipboardItem, tags, updateAssi
               "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                tag_id: clipItemTag
+                tag_id: selectedTag.id
             })
           })
           .then(response => {
@@ -32,8 +42,7 @@ function Controls({ selectedClipboardItem, deleteClipboardItem, tags, updateAssi
             return response.json();
           })
           .then(updatedClipItemTagData => {
-            setClipItemTag(updatedClipItemTagData.tag_id);
-    
+            // setClipItemTag(updatedClipItemTagData.tag_id);
             updateAssignTag(updatedClipItemTagData);
           })
           .then(() => setShowUpdateTagForm(false))
@@ -54,20 +63,20 @@ function Controls({ selectedClipboardItem, deleteClipboardItem, tags, updateAssi
       <div className="controls-component">
         <h4>Controls</h4>
         <button onClick={handleFavorite}>Favorite/Assign Keyboard Shortcut</button>
-        
+
         <button className="show-update-tag-button" onClick={() => setShowUpdateTagForm(!showUpdateTagForm)}>
-        {showUpdateTagForm ? <img src={unupdateTag} alt="Unedit Tag" className="unedit-img"/> : <img src={updateTag} alt="Update Tag" className="edit-img"/>}
-        </button>
+                {showUpdateTagForm ? <img src={unupdateTag} alt="Unedit Tag" className="unedit-img"/> : <img src={updateTag} alt="Update Tag" className="edit-img"/>}
+            </button>
             {showUpdateTagForm && (
                 <div>
-                    <form onSubmit={handleAssignTag}>
                     <label>Assign Tag</label>
-                    <input type="text" name="name" value={clipItemTag} onChange={(e) => setClipItemTag(e.target.value)}/>
-                    <button type="submit">Save Changes</button>
-                    </form>
+                    {tags.map(tag => (
+                        <button key={tag.id} onClick={() => handleTagSelection(tag)}>
+                            {tag.name}
+                        </button>
+                    ))}
                 </div>
             )}
-
 
 
 

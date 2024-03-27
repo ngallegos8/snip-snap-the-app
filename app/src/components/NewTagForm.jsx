@@ -1,10 +1,15 @@
 import React, { useState } from "react";
+import ColorSelector from "./ColorSelector";
 
 function NewTagForm({ onNewTagFormSubmit }) {
   const [tagName, setTagName] = useState("")
-//   const [tagColor, setTagColor] = useState("")
-  
+  const [tagColor, setTagColor] = useState("")
 
+
+  function handleColorSelect(color) {
+    setTagColor(color);
+ }
+  
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -12,7 +17,7 @@ function NewTagForm({ onNewTagFormSubmit }) {
     const newTag = {
         name: tagName,
         // user_id: 
-        // color: tagColor
+        color: tagColor
     }
     fetch("/tags", {
         method: 'POST',
@@ -23,14 +28,13 @@ function NewTagForm({ onNewTagFormSubmit }) {
     })
     .then(response => {
         if (!response.ok) {
-          throw new Error('Failed to update tag');
+          throw new Error('Failed to create tag');
         }
         return response.json();
       })
     .then(onNewTagFormSubmit)
         setTagName(onNewTagFormSubmit.name)
-        // setTagColor(onNewTagFormSubmit.color)
-
+        setTagColor(onNewTagFormSubmit.color)
 }
 
   return (
@@ -39,7 +43,8 @@ function NewTagForm({ onNewTagFormSubmit }) {
       <form>
         <input type="text" name="name" value={tagName} onChange={(e) => setTagName(e.target.value)}/>
         {/* <input type="text" name="color" value={tagColor} onChange={(e) => setTagColor(e.target.value)}/> */}
-        <button type="submit">Create Tag</button>
+        <ColorSelector onColorSelect={handleColorSelect} />
+        {/* <button type="submit">Create Tag</button> */}
       </form>
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 
 
-function DisplayPreview({ selectedClipboardItem }) {
+function DisplayPreview({ selectedClipboardItem, tag }) {
   if (!selectedClipboardItem) {
       return <div>No item selected</div>;
   }
@@ -21,10 +21,21 @@ function DisplayPreview({ selectedClipboardItem }) {
       content = <a href={selectedClipboardItem.content} download>Download File</a>;
   }
 
+//   const tagName = selectedClipboardItem.tag_id ? selectedClipboardItem.tags : 'No tag';
+//   console.log(selectedClipboardItem)
+
+
+
+  
+
+
   return (
       <div className="displaypreview-component">
           <h3>DisplayPreview</h3>
           {selectedClipboardItem.content}
+          {/* {selectedClipboardItem.tagName} */}
+          {/* {content} */}
+          Tag: {tag.name}
       </div>
   );
 }
