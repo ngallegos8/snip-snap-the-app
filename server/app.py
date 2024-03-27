@@ -16,24 +16,39 @@ bp = Blueprint('clipboard', __name__)
 from config import app, api
 # from server.config import app, api
 
-CORS(app)
-# CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
-
-
-#) ✅ python -c 'import os; print(os.urandom(16))'
-#) Used to hash the session data
-# app.secret_key = b'*\x10\x1eI~\n=\xe6\x92\xb4N\xe1\x94\x8b\xea\xb8'
-app.secret_key = b'\tG\xfc1\x97\xc1(\xfc\xfb\x17\xf3\xf9T\xff\xeb\xb0'
-
-
 # Add your model imports
 from models import db, User, ClipboardItem, Tag
 # from server.models import db
 
+# def save_clipboard_item(content):
+#     # Determine the content type
+#     if content.startswith('data:image/png;base64,'):
+#         content_type = 'image'
+#     elif content.startswith('file://'):
+#         content_type = 'file'
+#     else:
+#         content_type = 'text'
+
+#     # Create or update the clipboard item
+#     clipboard_item = ClipboardItem(content=content, contentType=content_type)
+#     # clipboard_item = ClipboardItem(content=content, contentType=content_type, user_id=user_id)
+#     db.session.add(clipboard_item)
+#     db.session.commit()
+#     return clipboard_item
+
+
+CORS(app)
+# CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
+
+#) ✅ python -c 'import os; print(os.urandom(16))'
+#) Used to hash the session data
+app.secret_key = b'\tG\xfc1\x97\xc1(\xfc\xfb\x17\xf3\xf9T\xff\xeb\xb0'
+
+
 import logging
 logging.basicConfig(level=logging.DEBUG)
 app.debug = True
-
+app.config["PERMANENT_SESSION_LIFETIME"]
 
 # Views go here!
 @app.route('/')
@@ -49,7 +64,7 @@ def check_session():
         # print(session["user_id"])
     else:
         print("User is logged in")
-        # print(session["user_id"])
+        print(session["user_id"])
 
 
 class SignUp(Resource):
@@ -234,7 +249,7 @@ api.add_resource(getOneClipboardItem,'/clipboarditems/<int:id>')
 
 class SaveClipboard(Resource):
     def post(self):
-        # if "user_id" not in session:
+        # if session.get("user_id") is None:
         #     return "User not logged in", 401
         
         data = request.get_json()
@@ -272,6 +287,28 @@ class SaveClipboard(Resource):
         return 'Content saved', 201
 
 api.add_resource(SaveClipboard, '/save_clipboard')
+
+# class SaveClipboard(Resource):
+#     def post(self):
+#         data = request.get_json()
+#         if data is None:
+#             return 'Bad Request', 400
+#         content = data.get('content')
+#         if content is None:
+#             return 'Bad Request', 400
+
+#         user_id = session.get("user_id")
+#         if user_id is None:
+#             return "User not logged in", 401
+
+#         try:
+#             clipboard_item = save_clipboard_item(content)
+#             return clipboard_item.to_dict(), 201
+#         except Exception as e:
+#             print(e)
+#             return {"errors": ["validation errors"]}, 400
+        
+# api.add_resource(SaveClipboard, '/save_clipboard')
 
 
 

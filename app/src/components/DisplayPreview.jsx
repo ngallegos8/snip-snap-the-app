@@ -8,7 +8,6 @@ function DisplayPreview({ selectedClipboardItem, tag }) {
   }
 
   // Assuming the content is a Base64 encoded string for images or files
-  // You might need to adjust this based on how your backend sends the data
   const contentType = selectedClipboardItem.contentType; // This should be determined based on the content
   let content;
 
@@ -24,10 +23,6 @@ function DisplayPreview({ selectedClipboardItem, tag }) {
 //   console.log(selectedClipboardItem)
 
 const tagName = selectedClipboardItem.tag_id ? tag.name : 'No tag';
-
-
-
-  
 
 
   return (

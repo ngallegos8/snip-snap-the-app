@@ -204,20 +204,6 @@ function UserHome({ onLogin }) {
             </div>
         </main>
 
-
-
-
-
-
-
-
-        // <main>
-        //     <div className="header-top"></div>
-        //     <button className='login-btn' onClick={handleLogout}>Logout</button>
-        //     <h1 className="welcome-msg">Welcome Back!{ user }</h1>
-        //     <Search search={searchClipItems} setSearch={setSearchClipItems} />
-        //     <ClipItemList clipItems={displayedClipItems} deleteClipItem={deleteClipItem} />
-        // </main>
     );
 }
 

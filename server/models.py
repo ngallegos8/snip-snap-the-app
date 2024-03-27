@@ -78,6 +78,7 @@ class ClipboardItem(db.Model, SerializerMixin):
     __tablename__ = 'clipboard_items'
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
+    # contentType = db.Column(db.String(50), nullable=False)
     is_favorited = db.Column(db.Boolean, default=False)
     keyboard_shortcut = db.Column(db.String, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)

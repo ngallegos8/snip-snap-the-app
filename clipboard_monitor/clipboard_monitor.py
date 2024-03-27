@@ -1,5 +1,3 @@
-
-
 import time
 import subprocess 
 import os
@@ -29,6 +27,7 @@ class ClipboardMonitor:
 
     def save_file(self):
         file_url = self.pasteboard.propertyListForType_(AppKit.NSFilenamesPboardType)
+       
         if file_url:
             file_path = file_url[0] # Assuming the first URL is the one you want to saveP
             file_name = os.path.basename(file_path)
@@ -41,6 +40,7 @@ class ClipboardMonitor:
             file_content_base64 = base64.b64encode(file_content).decode('utf-8')
             
             # Prepare the data to send
+           
             data = {'content': file_content_base64, 'filename': file_name}
             
             # Send the data to the Flask server

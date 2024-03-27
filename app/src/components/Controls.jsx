@@ -88,7 +88,7 @@ const handleCopyToClipboard = () => {
                 setTimeout(() => {
                     setMessage("");
                     setMessageType("");
-                }, 3000); // Clear message after 3 seconds
+                }, 3000);
             })
             .catch(err => {
                 setMessage("Failed to copy text. Please try again.");
@@ -96,7 +96,7 @@ const handleCopyToClipboard = () => {
                 setTimeout(() => {
                     setMessage("");
                     setMessageType("");
-                }, 3000); // Clear message after 3 seconds
+                }, 3000);
             });
     }
 };

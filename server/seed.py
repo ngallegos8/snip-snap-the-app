@@ -41,7 +41,14 @@ with app.app_context():
     item3 = ClipboardItem(content="NICK", user_id=3, tag_id=1)
     item4 = ClipboardItem(content="ABC", user_id=1, tag_id=3)
     item5 = ClipboardItem(content="Abc", user_id=2, tag_id=3)
-    item6 = ClipboardItem(content="abc", user_id=3, tag_id=2)
+    item6 = ClipboardItem(content="abcImage", user_id=3, tag_id=2)
+
+    # item1 = ClipboardItem(content="STEPHEN", contentType="Text", user_id=1, tag_id=1, is_favorited=True)
+    # item2 = ClipboardItem(content="DAVID", contentType="Text", user_id=2, tag_id=1, is_favorited=True)
+    # item3 = ClipboardItem(content="NICK", contentType="Text", user_id=3, tag_id=1)
+    # item4 = ClipboardItem(content="ABC", contentType="File", user_id=1, tag_id=3)
+    # item5 = ClipboardItem(content="Abc", contentType="File", user_id=2, tag_id=3)
+    # item6 = ClipboardItem(content="abcImage", contentType="Image", user_id=3, tag_id=2)
 
     db.session.add(item1)
     db.session.add(item2)
