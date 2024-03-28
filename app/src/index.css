@@ -31,7 +31,7 @@ height: 100%; /* Full viewport height */
 
 /* Explorer */
 .explorer {
-flex: 2; /* Takes up 2/3 of the screen width */
+flex: 5; /* Takes up 2/3 of the screen width */
 display: flex; /* Ensure it's a flex container */
 flex-direction: row; /* Children (ClipItemList and Preview) will be in a row */
 height: 100%;
@@ -43,6 +43,102 @@ display: flex;
 flex-direction: column;
 height: 100%;
 }
+
+.searchbar {
+  height: 80px; /* Fixed height */
+  width: 100%;
+  display: flex; /* Ensure it's a flex container */
+  justify-content: center; /* Center buttons horizontally */
+  align-items: center; /* Center buttons vertically */
+ }
+
+ .custom-search-bar {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+/* .search-icon {
+  margin-right: 5px;
+} */
+
+.search-input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px 30px 5px 10px; /* Adjust padding to make room for the icon */
+  background-image: url('/src/images/glass.png'); /* Use the path to your icon */
+  background-repeat: no-repeat;
+  background-position: 10px center; /* Position the icon inside the input field */
+  background-size: 20px 20px; /* Adjust size as needed */
+  width: 100%;
+}
+
+ .taglist-component {
+  flex-grow: 1; /* Take up the remaining space */
+  display: flex; /* Ensure it's a flex container */
+  flex-direction: column;
+  width: 100%;
+  overflow-y: auto; /* Enable scrolling if content overflows */
+ }
+
+ .tagcard-component {
+  /* height: 40px; */
+  width: 100%;
+  display: flex; /* Ensure it's a flex container */
+ }
+
+ .tag-name-btn {
+  height: 40px; /* Fixed height */
+  width: 60%;
+  display: flex; /* Ensure it's a flex container */
+  background-color: transparent;
+  border: none; 
+  /* color: #333;  */
+  cursor: pointer; 
+  padding: 10px; 
+  margin: 5px; 
+  border-radius: 5px; 
+  /* transition: background-color 0.3s ease;  */
+ }
+
+ .tag-name-btn button {
+  background-color: transparent; /* Make buttons transparent */
+  border: none; /* Remove default border */
+  color: #302929; /* Set text color */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  padding: 10px; /* Add some padding */
+  margin: 5px; /* Add some margin */
+  border-radius: 5px; /* Rounded edges */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+ }
+ .tag-name-btn button:hover {
+  background-color: #f0f0f0; /* Light grey background on hover */
+ }
+
+ .new-tag-btn {
+  height: 40px; /* Fixed height */
+  width: 100%;
+  display: flex; /* Ensure it's a flex container */
+  background-color: transparent; /* Make buttons transparent */
+  border: none; /* Remove default border */
+  color: #333; /* Set text color */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  padding: 10px; /* Add some padding */
+  margin: 5px; /* Add some margin */
+  border-radius: 5px; /* Rounded edges */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+ }
+
+.settings-component {
+  height: 80px; /* Fixed height */
+  width: 100%;
+  display: flex; /* Ensure it's a flex container */
+  justify-content: center; /* Center buttons horizontally */
+  align-items: center; /* Center buttons vertically */
+ }
+
 
 /* Explorer-component */
 .explorer-component {
@@ -86,6 +182,7 @@ width: 100%;
 /* Controls */
 .controls {
   height: 80px; /* Fixed height */
+  width: 100%;
   display: flex; /* Ensure it's a flex container */
   justify-content: center; /* Center buttons horizontally */
   align-items: center; /* Center buttons vertically */
@@ -118,6 +215,7 @@ width: 100%;
 .displaypreview {
   flex-grow: 1; /* Take up the remaining space */
   display: flex; /* Ensure it's a flex container */
+  width: 100%;
   overflow-y: auto; /* Enable scrolling if content overflows */
  }
 

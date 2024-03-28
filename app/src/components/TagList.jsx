@@ -31,7 +31,7 @@ function handleNewTagFormSubmit(tag) {
       <ul className="taglist-component">
         {/* <h3>TagList</h3> */}
         {tagList}
-        <button onClick={() => setShowNewTagForm(!showNewTagForm)}>New Tag</button>
+        <button className="new-tag-btn" onClick={() => setShowNewTagForm(!showNewTagForm)}>New Tag</button>
         {showNewTagForm && <NewTagForm onNewTagFormSubmit={handleNewTagFormSubmit} />}
       </ul>
     )

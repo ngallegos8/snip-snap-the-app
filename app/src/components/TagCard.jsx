@@ -6,7 +6,7 @@ import ColorSelector from "./ColorSelector";
 // import deleteIcon from '../images/delete.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { faPen } from '@fortawesome/free-solid-svg-icons'; // For solid style
+import { faBackward } from '@fortawesome/free-solid-svg-icons'; // For solid style
 import { faEdit } from '@fortawesome/free-regular-svg-icons'; // For regular style
 
 
@@ -79,8 +79,8 @@ function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect, isSelected }
     return (
       <div className={`tagcard-component ${isSelected ? 'selected' : ''}`}>
           <button className="tag-name-btn" style={{ color: tag.color }} onClick={() => handleTagClick()}>
-            <div className="tag-name-btn-name">{tag.name}</div>
             <div className="tag-name-btn-id">{tag.id}</div>
+            <div className="tag-name-btn-name">{tag.name}</div>
           </button>
           <div
             style={{
@@ -94,15 +94,16 @@ function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect, isSelected }
           />
           {showUpdateButton ? 
             <button className="show-update-form-button" onClick={() => setShowUpdateForm(!showUpdateForm)}>
-              {showUpdateForm ? <FontAwesomeIcon icon={faEdit} /> : <FontAwesomeIcon icon={faPen} />}
+              {showUpdateForm ? <FontAwesomeIcon icon={faBackward} /> : <FontAwesomeIcon icon={faEdit} />}
             </button>
           : ""
           }
           {showUpdateForm && ( // Conditionally render the update form based on showUpdateForm state
             <div>
               <form onSubmit={handleEditTag}>
-                <label>Update Tag Name:</label>
+                <label className="tag-label-name">New Tag Name</label>
                 <input type="text" name="name" value={tagName} onChange={(e) => setTagName(e.target.value)}/>
+                <label className="tag-label-color">New Tag Color</label>
                 <ColorSelector onColorSelect={handleColorSelect} />
                 <button type="submit">Save Changes</button>
                 <button onClick={handleDelete} className="delete-tag"><FontAwesomeIcon icon={faTrash} /></button>
