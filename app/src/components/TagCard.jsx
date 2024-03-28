@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import ColorSelector from "./ColorSelector";
 
-import updateIcon from '../images/update-icon.png';
-import uneditIcon from '../images/unedit-icon.png';
-import deleteIcon from '../images/delete.png';
+// import updateIcon from '../images/update-icon.png';
+// import uneditIcon from '../images/unedit-icon.png';
+// import deleteIcon from '../images/delete.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPen } from '@fortawesome/free-solid-svg-icons'; // For solid style
+import { faEdit } from '@fortawesome/free-regular-svg-icons'; // For regular style
 
 
 
@@ -11,6 +15,7 @@ function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect, isSelected }
   const [tagName, setTagName] = useState(tag.name)
   const [tagColor, setTagColor] = useState(tag.color)
   const [showUpdateForm, setShowUpdateForm] = useState(false);
+  const [showUpdateButton, setShowUpdateButton] = useState(false);
   // const [onTagClick, setOnTagClick] = useState([])
 
   console.log(tag)
@@ -58,7 +63,9 @@ function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect, isSelected }
  }
 
  function handleTagClick() {
-  onTagClick(tag.id); // This will now also trigger the onSelect function if it's passed
+  onTagClick(tag.id);
+  // setShowUpdateForm(!showUpdateForm);
+  setShowUpdateButton(!showUpdateButton)
 }
 
 
@@ -85,19 +92,20 @@ function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect, isSelected }
               marginLeft: "5px",
             }}
           />
-          <button className="show-update-form-button" onClick={() => setShowUpdateForm(!showUpdateForm)}>
-            {showUpdateForm ? <img src={uneditIcon} alt="Unedit Tag" className="unedit-img"/> : <img src={updateIcon} alt="Update Tag" className="edit-img"/>}
-          </button>
-          <button onClick={handleDelete} className="delete-tag"><img src={deleteIcon} alt="Delete Tag" className="delete-img"/></button>
-          {showUpdateForm && (
+          {showUpdateButton ? 
+            <button className="show-update-form-button" onClick={() => setShowUpdateForm(!showUpdateForm)}>
+              {showUpdateForm ? <FontAwesomeIcon icon={faEdit} /> : <FontAwesomeIcon icon={faPen} />}
+            </button>
+          : ""
+          }
+          {showUpdateForm && ( // Conditionally render the update form based on showUpdateForm state
             <div>
               <form onSubmit={handleEditTag}>
                 <label>Update Tag Name:</label>
                 <input type="text" name="name" value={tagName} onChange={(e) => setTagName(e.target.value)}/>
-                {/* <label>Update Tag Color:</label>
-                <input type="text" name="color" value={tagColor} onChange={(e) => setTagColor(e.target.value)}/> */}
                 <ColorSelector onColorSelect={handleColorSelect} />
                 <button type="submit">Save Changes</button>
+                <button onClick={handleDelete} className="delete-tag"><FontAwesomeIcon icon={faTrash} /></button>
               </form>
             </div>
           )}

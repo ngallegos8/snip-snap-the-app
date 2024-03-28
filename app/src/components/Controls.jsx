@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import updateTag from '../images/tag.png';
 import unupdateTag from '../images/untag.png';
-import deleteIcon from '../images/delete.png';
+// import deleteIcon from '../images/delete.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCopy, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 
 function Controls({ selectedClipboardItem, deleteClipboardItem, tags, updateAssignTag, onFavorite, onCopyToClipboard }) {
@@ -111,7 +113,7 @@ const handleCopyToClipboard = () => {
 
   return (
       <div className="controls-component">
-        <h4>Controls</h4>
+        {/* <h4>Controls</h4> */}
         {/* <button onClick={handleFavorite}>Favorite/Assign Keyboard Shortcut</button> */}
 
         <button className="show-update-tag-button" onClick={() => setShowUpdateTagForm(!showUpdateTagForm)}>
@@ -130,9 +132,9 @@ const handleCopyToClipboard = () => {
 
 
 
-          <button onClick={handleCopyToClipboard}>Copy to Clipboard</button>
+          <button onClick={handleCopyToClipboard}><FontAwesomeIcon icon={faCopy} /></button>
                 {message && <div className={`message ${messageType}`}>{message}</div>}
-          <button onClick={handleDelete} className="delete-clip-item"><img src={deleteIcon} alt="Delete Tag" className="delete-img"/></button>
+          <button onClick={handleDelete} className="delete-clip-item"><FontAwesomeIcon icon={faTrash} /></button>
       </div>
   );
 }

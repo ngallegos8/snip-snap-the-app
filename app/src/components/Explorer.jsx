@@ -16,7 +16,7 @@ function Explorer({ clipboardItems, deleteClipboardItem, tags, updateAssignTag, 
     
     return (
         <div className="explorer-component">
-            <h1>Explorer</h1>
+            {/* <h1>Explorer</h1> */}
             <div className="clipitemlist">
                 <ClipItemList clipboardItems={clipboardItems} 
                               onSelect={onSelect} />

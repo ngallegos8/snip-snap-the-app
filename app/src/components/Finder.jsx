@@ -12,7 +12,7 @@ function Finder({ search, setSearch, tags, onTagClick, onSelect, onNewTagFormSub
 
     return (
       <div className="finder-component">
-        <h1>Finder</h1>
+        {/* <h1>Finder</h1> */}
         <Search search={search} setSearch={setSearch} />
         <TagList tags={tags}  onTagClick={onTagClick} onSelect={onSelect} onNewTagFormSubmit={onNewTagFormSubmit} updateTag={updateTag} selectedTagId={selectedTagId} deleteTag={deleteTag}/>
         <Settings handleLogout={handleLogout}/>

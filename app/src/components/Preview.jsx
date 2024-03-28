@@ -15,8 +15,8 @@ function Preview ({ selectedClipboardItem, deleteClipboardItem, tags, updateAssi
 
     
     return (
-        <div className="preview-component">
-            <h3>Preview</h3>
+        <div className="preview-controls-container">
+            {/* <h3>Preview</h3> */}
 
             <div className="controls">
                 <Controls selectedClipboardItem={selectedClipboardItem}

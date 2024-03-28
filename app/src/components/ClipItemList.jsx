@@ -12,7 +12,7 @@ function ClipItemList({ clipboardItems, onSelect }) {
   return (
       <>
         <ul className="clipitemlist-component">
-            <h3>ClipboardItemList</h3>
+            {/* <h3>ClipboardItemList</h3> */}
             {clipboardItemList}
         </ul>
       </>

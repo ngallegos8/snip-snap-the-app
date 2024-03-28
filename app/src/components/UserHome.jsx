@@ -166,7 +166,7 @@ function UserHome({ onLogin }) {
 
     return(
         <main>
-            <div className="window">
+            <div className="main-container">
 
                 <div className="finder">
                     {/* <Finder search={searchClipboardItems} setSearch={setSearchClipboardItems} tags={tags} deleteTag={deleteTag} handleLogout={handleLogout} /> */}

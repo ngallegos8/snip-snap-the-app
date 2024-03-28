@@ -33,7 +33,7 @@ function DisplayPreview({ selectedClipboardItem, tag }) {
             Information
             <div className="cbi-preview-info-created">
                 <div className="cbi-preview-info-created-title">Created</div>
-                <div className="cbi-preview-info-created-info">{selectedClipboardItem.created_at}</div>
+                <div className="cbi-preview-info-created-info">{selectedClipboardItem.created_fat}</div>
             </div>
             <div className="cbi-preview-info-updated">
                 <div className="cbi-preview-info-updated-title">Updated</div>
