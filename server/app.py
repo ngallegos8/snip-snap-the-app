@@ -253,8 +253,8 @@ class SaveClipboard(Resource):
         #     return "User not logged in", 401
         
         data = request.get_json()
-        print(data)
-        print(session["user_id"])
+        # print(data)
+        # print(session["user_id"])
         if data is None:
             return 'Bad Request', 400
         content = data.get('content')

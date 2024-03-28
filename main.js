@@ -6,12 +6,12 @@ function createMainWindow() {
     const mainWindow = new BrowserWindow({
         // titleBarStyle: 'customButtonsOnHover',
         // frame: false,
-        titleBarStyle: 'hidden',
-        titleBarOverlay: {
-            color: '#00fe8r',
-            symbolColor: '#74b1be',
-            height: 60
-          },
+        // titleBarStyle: 'hidden',
+        // titleBarOverlay: {
+        //     color: '#00fe8r',
+        //     symbolColor: '#74b1be',
+        //     height: 60
+        //   },
         title: 'Electron',
         width: 1000,
         height: 600,
@@ -61,18 +61,22 @@ app.whenReady().then(() => {
         if (BrowserWindow.getAllWindows().length === 0) createMainWindow()
     })
 
-    const ret = globalShortcut.register('Control+Option+Command+C', () => {
-        console.log('CommandOrControl+X is pressed');
-        // Assuming mainWindow is accessible here
-        mainWindow.webContents.send('copy-clipitem');
-    });
+    // const ret = globalShortcut.register('Control+Option+Command+C', () => {
+    //     console.log('CommandOrControl+X is pressed');
+    //     // Assuming mainWindow is accessible here
+    //     mainWindow.webContents.send('copy-clipitem');
+    // });
 
-    if (!ret) {
-        console.log('registration failed');
-    }
+    // if (!ret) {
+    //     console.log('registration failed');
+    // }
 
-    // Check if the shortcut is registered
-    console.log(globalShortcut.isRegistered('Control+Option+Command+C'));
+    // // Check if the shortcut is registered
+    // console.log(globalShortcut.isRegistered('Control+Option+Command+C'));
+
+
+
+
 });
 
 app.on('will-quit', () => {

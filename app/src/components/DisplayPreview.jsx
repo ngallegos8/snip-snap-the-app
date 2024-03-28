@@ -22,15 +22,41 @@ function DisplayPreview({ selectedClipboardItem, tag }) {
 //   const tagName = selectedClipboardItem.tag_id ? selectedClipboardItem.tags : 'No tag';
 //   console.log(selectedClipboardItem)
 
-const tagName = selectedClipboardItem.tag_id ? tag.name : 'No tag';
+// const tagName = selectedClipboardItem.tag_id ? tag.name : 'No tag';
 
 
   return (
     <div className="displaypreview-component">
-          <h3>DisplayPreview</h3>
-          {selectedClipboardItem.content}
-          Tag: {tagName}
+          {/* <h3>DisplayPreview</h3> */}
+        <div className="cbi-preview-content">{selectedClipboardItem.content}</div>
+        <div className="cbi-preview-info">
+            Information
+            <div className="cbi-preview-info-created">
+                <div className="cbi-preview-info-created-title">Created</div>
+                <div className="cbi-preview-info-created-info">{selectedClipboardItem.created_at}</div>
+            </div>
+            <div className="cbi-preview-info-updated">
+                <div className="cbi-preview-info-updated-title">Updated</div>
+                <div className="cbi-preview-info-updated-info">{selectedClipboardItem.updated_at}</div>
+            </div>
+        </div>
+        <div className="cbi-preview-tags">
+            Tags
+            <div className="cbi-preview-tags-id">Tag ID: {selectedClipboardItem.tag_id}</div>
+            {/* <div className="cbi-preview-tags-id-name">{selectedClipboardItem.tag_id.name}</div> */}
+        </div>
+        {/* <div className="cbi-preview-key-shortcut">
+            Keyboard Shortcut
+            <div className="cbi-preview-key-shortcut">{selectedClipboardItem.keyboard_shortcut}</div>
+        </div> */}
+          {/* Tag: {tagName} */}
     </div>
+  );
+}
+
+export default DisplayPreview;
+
+
 
 
     //   <div className="displaypreview-component">
@@ -40,7 +66,3 @@ const tagName = selectedClipboardItem.tag_id ? tag.name : 'No tag';
     //       {/* {content} */}
     //       Tag: {tag.name}
     //   </div>
-  );
-}
-
-export default DisplayPreview;

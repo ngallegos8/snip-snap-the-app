@@ -47,7 +47,7 @@ class ClipboardMonitor:
             data = {'content': file_content_base64, 'filename': file_name}
             
             # Send the data to the Flask server
-            response = requests.post('http://localhost:5000/save_clipboard', json=data)
+            response = requests.post('http://127.0.0.1:5000/save_clipboard', json=data)
             if response.status_code == 201:
                 print("File saved successfully.")
             else:
@@ -65,7 +65,7 @@ class ClipboardMonitor:
             data = {'content': image_data_base64}
             
             # Send the data to the Flask server
-            response = requests.post('http://localhost:5000/save_clipboard', json=data)
+            response = requests.post('http://127.0.0.1:5000/save_clipboard', json=data)
             if response.status_code == 201:
                 print("Image saved successfully.")
             else:
@@ -86,7 +86,7 @@ class ClipboardMonitor:
         #         print(user_id)
             # else:
             #     print("None")
-        response = requests.post('http://localhost:5000/save_clipboard', json=data)
+        response = requests.post('http://127.0.0.1:5000/save_clipboard', json=data)
         if response.status_code == 201:
             print("Text saved successfully.")
         else:

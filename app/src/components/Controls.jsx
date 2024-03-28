@@ -112,7 +112,7 @@ const handleCopyToClipboard = () => {
   return (
       <div className="controls-component">
         <h4>Controls</h4>
-        <button onClick={handleFavorite}>Favorite/Assign Keyboard Shortcut</button>
+        {/* <button onClick={handleFavorite}>Favorite/Assign Keyboard Shortcut</button> */}
 
         <button className="show-update-tag-button" onClick={() => setShowUpdateTagForm(!showUpdateTagForm)}>
                 {showUpdateTagForm ? <img src={unupdateTag} alt="Unedit Tag" className="unedit-img"/> : <img src={updateTag} alt="Update Tag" className="edit-img"/>}
@@ -132,7 +132,7 @@ const handleCopyToClipboard = () => {
 
           <button onClick={handleCopyToClipboard}>Copy to Clipboard</button>
                 {message && <div className={`message ${messageType}`}>{message}</div>}
-          <button onClick={handleDelete}>Delete</button>
+          <button onClick={handleDelete} className="delete-clip-item"><img src={deleteIcon} alt="Delete Tag" className="delete-img"/></button>
       </div>
   );
 }

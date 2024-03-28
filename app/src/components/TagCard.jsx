@@ -70,8 +70,11 @@ function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect, isSelected }
 
     
     return (
-      <li className={`tagcard-component ${isSelected ? 'selected' : ''}`}>
-          <button className="tag-name-btn" style={{ color: tag.color }} onClick={() => handleTagClick()}>{tag.id} {tag.name}</button>
+      <div className={`tagcard-component ${isSelected ? 'selected' : ''}`}>
+          <button className="tag-name-btn" style={{ color: tag.color }} onClick={() => handleTagClick()}>
+            <div className="tag-name-btn-name">{tag.name}</div>
+            <div className="tag-name-btn-id">{tag.id}</div>
+          </button>
           <div
             style={{
               display: "inline-block",
@@ -85,7 +88,7 @@ function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect, isSelected }
           <button className="show-update-form-button" onClick={() => setShowUpdateForm(!showUpdateForm)}>
             {showUpdateForm ? <img src={uneditIcon} alt="Unedit Tag" className="unedit-img"/> : <img src={updateIcon} alt="Update Tag" className="edit-img"/>}
           </button>
-          <button onClick={handleDelete} className="remove-event"><img src={deleteIcon} alt="Delete Tag" className="delete-img"/></button>
+          <button onClick={handleDelete} className="delete-tag"><img src={deleteIcon} alt="Delete Tag" className="delete-img"/></button>
           {showUpdateForm && (
             <div>
               <form onSubmit={handleEditTag}>
@@ -98,7 +101,7 @@ function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect, isSelected }
               </form>
             </div>
           )}
-      </li>
+      </div>
     
     )
   }

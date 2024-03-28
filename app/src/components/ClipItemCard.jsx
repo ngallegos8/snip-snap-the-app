@@ -12,9 +12,9 @@ function ClipItemCard({ clipboardItem, onSelect }) {
     
     return (
       <div className="clipitemcard-component" onClick={() => onSelect(clipboardItem)}>
-            {clipboardItem.content}
-            {clipboardItem.id}
-        </div>
+            <div className="clipitemcard-id">{clipboardItem.id}</div>
+            <div className="clipitemcard-content">{clipboardItem.content}</div>
+      </div>
     )
   }
 
