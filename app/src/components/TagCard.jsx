@@ -16,6 +16,7 @@ function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect, isSelected }
   const [tagColor, setTagColor] = useState(tag.color)
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [showUpdateButton, setShowUpdateButton] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   // const [onTagClick, setOnTagClick] = useState([])
 
   console.log(tag)
@@ -26,6 +27,11 @@ function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect, isSelected }
 
   function handleEditTag(e) {
     e.preventDefault();
+
+    if (tagName === "") {
+      setErrorMessage('Tag name cannot be empty.');
+      return;
+   }
 
     fetch(`http://127.0.0.1:5000/tags/${tag.id}`, {
         method: "PATCH",
@@ -68,17 +74,22 @@ function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect, isSelected }
   setShowUpdateButton(!showUpdateButton)
 }
 
+// const displayNameOrColor = tag.color ? tag.color : tag.name;
+
+const tagNameStyle = {
+  color: tag.color || 'inherit', // Use the tag's color if available, otherwise inherit the parent's color
+};
 
 
-  // Check if the tag object and its name property exist before rendering
- if (!tag || !tag.name) {
-    return <div>No tag name available</div>;
- }
+
+//  if (!tag || !tag.name) {
+//     return <div>No tag name available</div>;
+//  }
 
     
     return (
       <div className={`tagcard-component ${isSelected ? 'selected' : ''}`}>
-          <button className="tag-name-btn" style={{ color: tag.color }} onClick={() => handleTagClick()}>
+          <button className="tag-name-btn" style={tagNameStyle} onClick={() => handleTagClick()}>
             <div className="tag-name-btn-id">{tag.id}</div>
             <div className="tag-name-btn-name">{tag.name}</div>
           </button>
@@ -108,6 +119,7 @@ function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect, isSelected }
                 <ColorSelector onColorSelect={handleColorSelect} /><br></br>
                 <button type="submit">Save Changes</button>
                 <button className="delete-tag custom-delete-button" onClick={handleDelete} ><FontAwesomeIcon icon={faTrash} /></button>
+              {errorMessage && <div className="error-message">{errorMessage}</div>}
               </form>
             </div>
           )}

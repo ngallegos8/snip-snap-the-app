@@ -4,6 +4,7 @@ import ColorSelector from "./ColorSelector";
 function NewTagForm({ onNewTagFormSubmit }) {
   const [tagName, setTagName] = useState("")
   const [tagColor, setTagColor] = useState("")
+  const [errorMessage, setErrorMessage] = useState('');
 
 
   function handleColorSelect(color) {
@@ -13,6 +14,11 @@ function NewTagForm({ onNewTagFormSubmit }) {
   
   function handleSubmit(e) {
     e.preventDefault()
+
+    if (tagName === "") {
+      setErrorMessage('Tag name cannot be empty.');
+      return;
+   }
 
     const user_id = sessionStorage.getItem("user_id");
     // const user_id = session["user_id"];
@@ -48,6 +54,7 @@ function NewTagForm({ onNewTagFormSubmit }) {
         <label className="tag-label-color">Tag Color?</label>
         <ColorSelector onColorSelect={handleColorSelect} /><br></br>
         <button type="submit">Create Tag</button>
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
       </form>
     </div>
   );

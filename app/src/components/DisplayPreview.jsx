@@ -1,11 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 
 
 function DisplayPreview({ selectedClipboardItem, tag }) {
-  if (!selectedClipboardItem) {
-      return <div></div>;
-  }
+    const contentRef = useRef(null);
+
+    
+    useEffect(() => {
+        const resizeFont = () => {
+          const div = contentRef.current;
+          if (!div) return;
+    
+          let fontSize = parseInt(window.getComputedStyle(div).fontSize, 10);
+          const maxFontSize = 30;
+          const minFontSize = 10;
+    
+          // if content overflows
+          if (div.scrollWidth > div.offsetWidth) {
+            if (fontSize > minFontSize) {
+              fontSize -= 1;
+            }
+          } else {
+            if (fontSize < maxFontSize) {
+              fontSize += 1;
+            }
+          }
+    
+          div.style.fontSize = `${fontSize}px`;
+        };
+    
+        resizeFont();
+        window.addEventListener('resize', resizeFont);
+    
+        return () => window.removeEventListener('resize', resizeFont);
+     }, []);
+    
+
+
+    if (!selectedClipboardItem) {
+        return <div></div>;
+    }
+
 
   // Assuming the content is a Base64 encoded string for images or files
   const contentType = selectedClipboardItem.contentType; // This should be determined based on the content
@@ -28,12 +63,12 @@ function DisplayPreview({ selectedClipboardItem, tag }) {
   return (
     <div className="displaypreview-component">
           {/* <h3>DisplayPreview</h3> */}
-        <div className="cbi-preview-content">{selectedClipboardItem.content}</div>
+        <div className="cbi-preview-content" ref={contentRef}>{selectedClipboardItem.content}</div>
         <div className="cbi-preview-info">
-            Information
+            <div>Information</div>
             <div className="cbi-preview-info-created">
                 <div className="cbi-preview-info-created-title">Created</div>
-                <div className="cbi-preview-info-created-info">{selectedClipboardItem.created_fat}</div>
+                <div className="cbi-preview-info-created-info">{selectedClipboardItem.created_at}</div>
             </div>
             <div className="cbi-preview-info-updated">
                 <div className="cbi-preview-info-updated-title">Updated</div>
@@ -41,7 +76,7 @@ function DisplayPreview({ selectedClipboardItem, tag }) {
             </div>
         </div>
         <div className="cbi-preview-tags">
-            {/* Tags */}
+            <div>Tags</div>
             <div className="cbi-preview-tags-id">Tag ID: {selectedClipboardItem.tag_id}</div>
             {/* <div className="cbi-preview-tags-id-name">{selectedClipboardItem.tag_id.name}</div> */}
         </div>

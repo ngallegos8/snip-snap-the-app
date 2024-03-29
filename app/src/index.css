@@ -12,8 +12,47 @@ font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
 monospace;
 }
 
+.taglist-component
+.finder {
+ border: 1px solid #797979; /* Thin grey border */
+}
 
-/* index.css */
+.clipitemlist {
+ border-right: 1px solid #797979; /* Thin grey border */
+}
+.controls {
+  border-bottom: 1px solid #d3d3d3; /* Thin lighter grey border at the bottom */
+ }
+.cbi-preview-content {
+  border-bottom: 1px solid #d3d3d3; /* Thin lighter grey border at the bottom */
+ }
+ 
+ .settings-component {
+  border-top: 1px solid #c9c9c9; /* Thin lighter grey border at the top */
+ }
+
+.finder {
+  /* background-color: #dedede; */
+  background-color: #dedede;
+  background: linear-gradient(#dedede, #c9c4c4);
+}
+.controls {
+  /* background-color: #ebe9e9; */
+  background: linear-gradient(#edeaea 50%, #dfd8d8);
+}
+.cbi-preview-content {
+  background: linear-gradient(to bottom, #e9e7e7, #e9e7e7);
+ }
+ 
+ .cbi-preview-info {
+  background: linear-gradient(to bottom, #dfdede, #dfdede);
+  border-bottom: 1px solid #dfdfdf;
+ }
+ 
+ .cbi-preview-tags {
+  background: linear-gradient(to bottom, #f4f4f4, #f4f4f4);
+  flex-grow: 1;
+ }
 
 /* Main container */
 .main-container {
@@ -93,7 +132,7 @@ height: 100%;
   font-weight: bold; /* Make the text bold */
   color: #252525; /* Use a dark color for the text */
   padding: 10px 15px;
-  background-color: #f4ef9f; /* Light grey background to match the sidebar */
+  background-color: #fbc93d; /* Light grey background to match the sidebar */
   border-bottom: 1px solid #ccc; /* Add a subtle border at the bottom */
   margin-bottom: 10px; /* Add some space below the header */
  }
@@ -121,7 +160,7 @@ height: 100%;
  }
 
 
-.tag-name-btn-name {
+ .tag-name-btn-name {
   cursor: pointer; /* Change cursor to pointer on hover */
   font-weight: bold;
   color: #646464;
@@ -132,8 +171,9 @@ height: 100%;
  }
  
  .tag-name-btn-name:hover {
-  background-color: #f0f0f0; /* Light grey background on hover */
+  background-color: #b9b9b9; /* Light grey background on hover */
   color: #000; /* Dark text color on hover */
+  border-radius: 4px; /* Rounded edges on hover */
  }
 
  .tag-name-btn-id {
@@ -194,6 +234,7 @@ height: 100%;
   padding: 10px;
  }
  .new-tag-form{
+  
   padding: 10px;
  }
 
@@ -203,12 +244,13 @@ height: 100%;
   font-size: 14px; /* Match the font size of tags-header */
   font-weight: bold; /* Make the text bold */
   color: #333; /* Use a dark color for the text */
-  padding: 10px 15px; /* Add some padding */
-  background-color: #98ecf8; /* Light grey background to match the sidebar */
+  padding: 10px 15px;
+  background-color: #6cc0e5; /* Light grey background to match the sidebar */
   border: none; /* Remove default border */
   cursor: pointer; /* Change cursor to pointer on hover */
   margin-top: 10px; /* Add some space above the button */
   transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+
  }
  
  .new-tag-btn:hover {
@@ -275,7 +317,7 @@ height: 100%;
   font-weight: bold; /* Make the text bold */
   color: #252525; /* Use a dark color for the text */
   padding: 10px 15px; /* Add some padding */
-  background-color: #f4ef9f; /* Light grey background to match the sidebar */
+  background-color: #fbc93d; /* Light grey background to match the sidebar */
   border-bottom: 1px solid #ccc; /* Add a subtle border at the bottom */
   margin-bottom: 10px; /* Add some space below the header */
  }
@@ -311,7 +353,7 @@ overflow-y: auto; /* Enable scrolling if content overflows */
   font-weight: bold; /* Make the text bold */
   color: #252525; /* Use a dark color for the text */
   padding: 10px 15px; /* Adjust padding as needed */
-  background-color: #f0f0f0; /* Light grey background to match the sidebar */
+  background-color: #f8f8f8; /* Light grey background to match the sidebar */
   border-bottom: 1px solid #ccc; /* Add a subtle border at the bottom */
   margin-bottom: 10px; /* Add some space below the title */
  }
@@ -322,21 +364,18 @@ overflow-y: auto; /* Enable scrolling if content overflows */
   height: 30px;
   padding: 0 10px;
   margin: 5px 0;
-  background-color: #f0f0f0; /* Light grey background */
+  background-color: #f8f8f8; /* Light grey background */
   border-radius: 5px;
  }
  
  /* Alternate background color for every other item */
- .clipitemcard-component:nth-child(even) {
-  background-color: #e0e0e0; /* Slightly darker grey */
+ .clipitemcard-component:nth-child(even),
+ .clipitemcard-component.empty:nth-child(even) {
+  background-color: #eaeaea; /* Slightly darker grey */
  }
  
  .clipitemcard-component.empty {
-  background-color: #f0f0f0; /* Light grey background for empty rows */
- }
- 
- .clipitemcard-component.empty:nth-child(even) {
-  background-color: #e0e0e0; /* Slightly darker grey for empty rows */
+  background-color: #ffc5c5; /* Light grey background for empty rows */
  }
 
 
@@ -374,7 +413,7 @@ justify-content: center;
 
 /* Controls */
 .controls {
-  height: 300px; /* Fixed height */
+  height: 200px; /* Fixed height */
   width: 100%;
   display: flex; /* Ensure it's a flex container */
   justify-content: center; /* Center buttons horizontally */
@@ -406,10 +445,10 @@ justify-content: center;
   background-color: #f0f0f0; /* Light grey background on hover */
  }
 .copy-clip-item-btn:hover {
-  background-color: #98ecf8; /* Light grey background on hover */
+  background-color: #6cc0e5; /* Light grey background on hover */
  }
 .delete-clip-item-btn:hover {
-  background-color: #f6b1b1; /* Light grey background on hover */
+  background-color: #fb4f4f; /* Light grey background on hover */
  }
 
 .assign-tag-menu {
@@ -430,11 +469,92 @@ justify-content: center;
 /* DisplayPreview */
 .displaypreview-component {
 flex: 1; /* Takes up all available space in the preview-controls-container */
+flex-direction: column;
+flex-grow: 1;
+height: 100%;
 overflow-y: auto; /* Enable scrolling if content overflows */
 }
 
+.cbi-preview-content {
+  display: flex;
+  height: 40%;
+  width: 100%;
+  overflow-y: auto; /* Enable scrolling if content overflows */
+  /* font-size: 30px; */
+ }
+ 
+ /* Information Preview */
+ .cbi-preview-info,
+ .cbi-preview-tags {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 15%;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  overflow-y: auto; /* Enable scrolling if content overflows */
+ }
+ .cbi-preview-info-created-title,
+.cbi-preview-info-updated-title {
+  display: flex;
+  height: 12px;
+  width: 100%;
+  color:#909090;
+  padding: 2, 2;
+  font-size: 15px;
+ }
+ .cbi-preview-info-created-info,
+.cbi-preview-info-updated-info,
+.cbi-preview-tags-id {
+  display: flex;
+  height: 12px;
+  width: 100%;
+  color: #646464;
+  padding: 2, 2;
+ }
+ 
+ 
+ /* Styling to match ClipItemCard */
+ .cbi-preview-content {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 30px; /* Default font size */
+  color: #0b0a0a;
+  justify-content: center; /* Center content horizontally */
+  align-items: center;
+  overflow-wrap: break-word; /* Allow the text to wrap */
+  word-wrap: break-word; /* For better compatibility */
+  max-width: 100%; /* Ensure the content does not overflow its container */
+ }
+ .cbi-preview-info {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 20px; 
+  color: #0b0a0a; 
+ }
+ .cbi-preview-tags {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 18px; 
+  color: #0b0a0a; 
+ }
 
+ 
+ /* Ensure the IDs and other specific text match the style */
 
+ .cbi-preview-info-created-info,
+ .cbi-preview-info-updated-info {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px; 
+  color: #666; 
+ }
+ .cbi-preview-tags-id {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px; 
+  color: #666; 
+ }
 
 
 
