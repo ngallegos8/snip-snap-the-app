@@ -43,8 +43,10 @@ function NewTagForm({ onNewTagFormSubmit }) {
   return (
     <div className="new-tag-form">
       <form onSubmit={handleSubmit}>
-        <input type="text" name="name" value={tagName} onChange={(e) => setTagName(e.target.value)} />
-        <ColorSelector onColorSelect={handleColorSelect} />
+        <label className="tag-label-name">Name of Tag</label><br></br>
+        <input type="text" name="name" placeholder="e.g. 'Link'" value={tagName} onChange={(e) => setTagName(e.target.value)} /><br></br><br></br>
+        <label className="tag-label-color">Tag Color?</label>
+        <ColorSelector onColorSelect={handleColorSelect} /><br></br>
         <button type="submit">Create Tag</button>
       </form>
     </div>

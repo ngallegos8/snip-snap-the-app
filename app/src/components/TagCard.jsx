@@ -82,31 +82,32 @@ function TagCard({ tag, onTagClick, updateTag, deleteTag, onSelect, isSelected }
             <div className="tag-name-btn-id">{tag.id}</div>
             <div className="tag-name-btn-name">{tag.name}</div>
           </button>
-          <div
-            style={{
-              display: "inline-block",
-              width: "10px",
-              height: "10px",
-              backgroundColor: tag.color || "transparent", // Use transparent if no color is set
-              borderRadius: "50%",
-              marginLeft: "5px",
-            }}
-          />
-          {showUpdateButton ? 
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <div
+              style={{
+                // display: "inline-block",
+                width: "12px",
+                height: "12px",
+                backgroundColor: tag.color || "transparent", // Use transparent if no color is set
+                borderRadius: "50%",
+                marginLeft: "5px",
+              }}
+            />
+          </div>
+          {isSelected && (
             <button className="show-update-form-button" onClick={() => setShowUpdateForm(!showUpdateForm)}>
-              {showUpdateForm ? <FontAwesomeIcon icon={faBackward} /> : <FontAwesomeIcon icon={faEdit} />}
+              {showUpdateForm ? <FontAwesomeIcon icon={faBackward} className="fa-icon" /> : <FontAwesomeIcon icon={faEdit} className="fa-icon" />}
             </button>
-          : ""
-          }
+          )}
           {showUpdateForm && ( // Conditionally render the update form based on showUpdateForm state
-            <div>
-              <form onSubmit={handleEditTag}>
-                <label className="tag-label-name">New Tag Name</label>
-                <input type="text" name="name" value={tagName} onChange={(e) => setTagName(e.target.value)}/>
+            <div className="update-tag-form-div">
+              <form className="update-tag-form"onSubmit={handleEditTag}>
+                <label className="tag-label-name">New Tag Name</label><br></br>
+                <input type="text" name="name" placeholder="New Tag Name" value={tagName} onChange={(e) => setTagName(e.target.value)}/><br></br><br></br>
                 <label className="tag-label-color">New Tag Color</label>
-                <ColorSelector onColorSelect={handleColorSelect} />
+                <ColorSelector onColorSelect={handleColorSelect} /><br></br>
                 <button type="submit">Save Changes</button>
-                <button onClick={handleDelete} className="delete-tag"><FontAwesomeIcon icon={faTrash} /></button>
+                <button className="delete-tag custom-delete-button" onClick={handleDelete} ><FontAwesomeIcon icon={faTrash} /></button>
               </form>
             </div>
           )}

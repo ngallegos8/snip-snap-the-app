@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash, faSignIn } from '@fortawesome/free-solid-svg-icons';
 
 function Signup({ onLogin }) {
     const [user, setUser] = useState(null)
@@ -76,7 +76,7 @@ function Signup({ onLogin }) {
                        placeholder="Enter your email">
                 </input><br></br><br></br>
 
-              <button type="submit">Log In</button><br></br><br></br>
+              <button type="submit">Sign Up    <FontAwesomeIcon icon={faSignIn} /></button><br></br><br></br>
 
               <p className='user-signup-link'>Back to <Link to="/">Login</Link></p>
               

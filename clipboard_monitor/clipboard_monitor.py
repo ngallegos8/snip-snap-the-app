@@ -32,7 +32,7 @@ class ClipboardMonitor:
         file_url = self.pasteboard.propertyListForType_(AppKit.NSFilenamesPboardType)
        
         if file_url:
-            file_path = file_url[0] # Assuming the first URL is the one you want to saveP
+            file_path = file_url[0] # Assuming the first URL is the one you want to save
             file_name = os.path.basename(file_path)
             
             # Read the file content

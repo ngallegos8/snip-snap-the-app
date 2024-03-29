@@ -1,7 +1,7 @@
 from app import app 
 from models import db, User, ClipboardItem, Tag
-# from server.app import app 
-# from server.models import db, User, ClipboardItem, Tag
+# from ..server.app import app 
+# from ..server.models import db, User, ClipboardItem, Tag
 
 def seed_common_tags():
     common_tags = ["Text", "Image", "Email", "File", "Code"]

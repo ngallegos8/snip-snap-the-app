@@ -115,26 +115,42 @@ const handleCopyToClipboard = () => {
       <div className="controls-component">
         {/* <h4>Controls</h4> */}
         {/* <button onClick={handleFavorite}>Favorite/Assign Keyboard Shortcut</button> */}
-
-        <button className="show-update-tag-button" onClick={() => setShowUpdateTagForm(!showUpdateTagForm)}>
-                {showUpdateTagForm ? <img src={unupdateTag} alt="Unedit Tag" className="unedit-img"/> : <img src={updateTag} alt="Update Tag" className="edit-img"/>}
-            </button>
-            {showUpdateTagForm && (
-                <div>
-                    <label>Assign Tag</label>
-                    {tags.map(tag => (
-                        <button key={tag.id} onClick={() => handleTagSelection(tag)}>
-                            {tag.name}
-                        </button>
-                    ))}
-                </div>
-            )}
-
-
-
-          <button onClick={handleCopyToClipboard}><FontAwesomeIcon icon={faCopy} /></button>
+        <div className="control-component-buttons">
+                <button className="show-update-tag-button" onClick={() => setShowUpdateTagForm(!showUpdateTagForm)}>
+                    {showUpdateTagForm ? <img src={unupdateTag} alt="Unedit Tag" className="unedit-img"/> : <img src={updateTag} alt="Update Tag" className="edit-img"/>}
+                </button>
+                <button className="copy-clip-item-btn" onClick={handleCopyToClipboard}><FontAwesomeIcon icon={faCopy} /></button>
+                <button onClick={handleDelete} className="delete-clip-item-btn"><FontAwesomeIcon icon={faTrash} /></button>
+            </div>
                 {message && <div className={`message ${messageType}`}>{message}</div>}
-          <button onClick={handleDelete} className="delete-clip-item"><FontAwesomeIcon icon={faTrash} /></button>
+            <div className="update-tag-div">
+                {showUpdateTagForm && (
+                    <div className="assign-tag-menu">
+                        <label>Assign Tag</label>
+                        {tags.map(tag => (
+                            <button
+                                key={tag.id}
+                                onClick={() => handleTagSelection(tag)}
+                                style={{
+                                    backgroundColor: tag.color ? tag.color : 'rgba(211, 211, 211, 0.8)', // Use tag.color if available, otherwise default to light grey with 80% opacity
+                                    border: 'none',
+                                    color: 'black',
+                                    padding: '10px 20px',
+                                    textAlign: 'center',
+                                    textDecoration: 'none',
+                                    display: 'inline-block',
+                                    fontSize: '16px',
+                                    margin: '4px 2px',
+                                    cursor: 'pointer',
+                                    borderRadius: '4px',
+                                }}
+                            >
+                                {tag.name}
+                            </button>
+                        ))}
+                    </div>
+                )}
+            </div>
       </div>
   );
 }

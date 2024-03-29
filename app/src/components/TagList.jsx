@@ -29,7 +29,7 @@ function handleNewTagFormSubmit(tag) {
     
     return (
       <ul className="taglist-component">
-        {/* <h3>TagList</h3> */}
+        <h5 className="tags-header">Tags</h5>
         {tagList}
         <button className="new-tag-btn" onClick={() => setShowNewTagForm(!showNewTagForm)}>New Tag</button>
         {showNewTagForm && <NewTagForm onNewTagFormSubmit={handleNewTagFormSubmit} />}

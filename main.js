@@ -21,12 +21,12 @@ function createMainWindow() {
         }
     });
 
-    //ALLOWS TO TOGGLE DEV TOOLS W/ option+command+i
-    if (mainWindow.webContents.isDevToolsOpened()) {
-        mainWindow.webContents.closeDevTools();
-       } else {
-        mainWindow.webContents.openDevTools();
-       }
+    // //ALLOWS TO TOGGLE DEV TOOLS W/ option+command+i
+    // if (mainWindow.webContents.isDevToolsOpened()) {
+    //     mainWindow.webContents.closeDevTools();
+    //    } else {
+    //     mainWindow.webContents.openDevTools();
+    //    }
 
     const appPath = app.getAppPath();
     const startUrl = url.format({

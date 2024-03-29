@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 
 function DisplayPreview({ selectedClipboardItem, tag }) {
   if (!selectedClipboardItem) {
-      return <div>No item selected</div>;
+      return <div></div>;
   }
 
   // Assuming the content is a Base64 encoded string for images or files
@@ -41,7 +41,7 @@ function DisplayPreview({ selectedClipboardItem, tag }) {
             </div>
         </div>
         <div className="cbi-preview-tags">
-            Tags
+            {/* Tags */}
             <div className="cbi-preview-tags-id">Tag ID: {selectedClipboardItem.tag_id}</div>
             {/* <div className="cbi-preview-tags-id-name">{selectedClipboardItem.tag_id.name}</div> */}
         </div>

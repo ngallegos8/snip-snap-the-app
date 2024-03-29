@@ -13,11 +13,12 @@ function ColorSelector({ onColorSelect }) {
          {colors.map((color, index) => (
            <button
              key={index}
+             className="color-selector-button"
              style={{
                backgroundColor: color,
                borderRadius: "50%", // Circle button
-               width: "20px",
-               height: "20px",
+               width: "15px",
+               height: "15px",
                border: "none", // Remove the default button border
                padding: 0, // Remove padding
              }}
@@ -25,9 +26,10 @@ function ColorSelector({ onColorSelect }) {
            />
          ))}
             {/* Add a "no color" option */}
-            <button
+            {/* <button
+            className="no-color-button"
             style={{
-                backgroundColor: "transparent",
+                backgroundColor: "black", // Black background
                 border: "1px solid #ccc",
                 borderRadius: "50%", 
                 width: "20px", 
@@ -37,8 +39,7 @@ function ColorSelector({ onColorSelect }) {
             }}
             onClick={() => handleColorSelect("")}
             >
-           No Color
-         </button>
+           </button> */}
        </div>
     );
 }

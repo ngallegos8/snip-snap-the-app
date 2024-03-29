@@ -15,6 +15,7 @@ function UserHome({ onLogin }) {
     const [displayedTagClipboardItems, setDisplayedTagClipboardItems] = useState([]);
     const [filteredClipboardItems, setFilteredClipboardItems] = useState([]);
     const [selectedClipboardItem, setSelectedClipboardItem] = useState(null);
+    // const [isSelected, setIsSelected] = useState(false);
     const [tags, setTags] = useState([]);
     const [selectedTagId, setSelectedTagId] = useState(null);
 
@@ -60,6 +61,7 @@ function UserHome({ onLogin }) {
 
     const handleSelect = (clipboardItem) => {
         setSelectedClipboardItem(clipboardItem);
+        // setIsSelected(true);
     };
 
     const onFavorite = (clipboardItem) => {
@@ -117,7 +119,7 @@ function UserHome({ onLogin }) {
         if (selectedTagId === tagId) {
             // If the same tag is clicked again, display all clipboard items
             setFilteredClipboardItems([]);
-            setSelectedTagId(null);
+            setSelectedTagId();
         } else {
             // Filter clipboardItems where the tag_id matches the selected tag's ID
             const filteredItems = clipboardItems.filter(clipboardItem => clipboardItem.tag_id === tagId);

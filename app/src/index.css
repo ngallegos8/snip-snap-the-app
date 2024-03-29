@@ -76,17 +76,34 @@ height: 100%;
 }
 
  .taglist-component {
-  flex-grow: 1; /* Take up the remaining space */
+  flex-grow: 1;
   display: flex; /* Ensure it's a flex container */
   flex-direction: column;
   width: 100%;
+  /* height: 100%; */
+  padding-left: 0;
   overflow-y: auto; /* Enable scrolling if content overflows */
+
+  /* justify-content: center; */
+  /* align-items: center; */
+ }
+
+ .tags-header {
+  font-size: 14px; /* Adjust based on your design */
+  font-weight: bold; /* Make the text bold */
+  color: #252525; /* Use a dark color for the text */
+  padding: 10px 15px;
+  background-color: #f4ef9f; /* Light grey background to match the sidebar */
+  border-bottom: 1px solid #ccc; /* Add a subtle border at the bottom */
+  margin-bottom: 10px; /* Add some space below the header */
  }
 
  .tagcard-component {
   /* height: 40px; */
   width: 100%;
   display: flex; /* Ensure it's a flex container */
+  align-items: center; /* Center items vertically */
+  justify-content: space-between; /* Optionally, space items out evenly */
  }
 
  .tag-name-btn {
@@ -97,11 +114,37 @@ height: 100%;
   border: none; 
   /* color: #333;  */
   cursor: pointer; 
-  padding: 10px; 
+  /* padding: 10px;  */
   margin: 5px; 
   border-radius: 5px; 
   /* transition: background-color 0.3s ease;  */
  }
+
+
+.tag-name-btn-name {
+  cursor: pointer; /* Change cursor to pointer on hover */
+  font-weight: bold;
+  color: #646464;
+  padding: 5px 10px;
+  font-weight: 500;
+  font-size: 14px;
+  align-items: center; /* Center content vertically */
+ }
+ 
+ .tag-name-btn-name:hover {
+  background-color: #f0f0f0; /* Light grey background on hover */
+  color: #000; /* Dark text color on hover */
+ }
+
+ .tag-name-btn-id {
+  color: #909090; /* Use a darker color for the title */
+  font-size: 8px;
+  padding: 5px 10px;
+  font-weight: 400;
+  align-items: center; /* Center content vertically */
+ }
+
+
 
  .tag-name-btn button {
   background-color: transparent; /* Make buttons transparent */
@@ -117,26 +160,124 @@ height: 100%;
   background-color: #f0f0f0; /* Light grey background on hover */
  }
 
+.show-update-form-button,
+.show-update-form-button .fa-icon {
+ /* width: 30px;
+ height: 30px; 
+ padding: 0;
+ border: none;
+ background: none;
+ cursor: pointer;
+ align-items: center; */
+ 
+ background-color: transparent; /* Make buttons transparent */
+ border: none; /* Remove default border */
+ color: #302929; /* Set text color */
+ cursor: pointer; /* Change cursor to pointer on hover */
+ padding: 10px; /* Add some padding */
+ margin: 5px; /* Add some margin */
+ border-radius: 5px; /* Rounded edges */
+ transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+/* .show-update-form-button .fa-icon {
+  font-size: 16px; 
+  align-items: center; 
+ } */
+
+ .show-update-form-button:hover,
+ .show-update-form-button .fa-icon:hover {
+  background-color: #98ecf8; /* Hover color same as new-tag-btn */
+ }
+
+
+ .update-tag-form-div{
+  padding: 10px;
+ }
+ .new-tag-form{
+  padding: 10px;
+ }
+
  .new-tag-btn {
-  height: 40px; /* Fixed height */
-  width: 100%;
-  display: flex; /* Ensure it's a flex container */
-  background-color: transparent; /* Make buttons transparent */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px; /* Match the font size of tags-header */
+  font-weight: bold; /* Make the text bold */
+  color: #333; /* Use a dark color for the text */
+  padding: 10px 15px; /* Add some padding */
+  background-color: #98ecf8; /* Light grey background to match the sidebar */
   border: none; /* Remove default border */
-  color: #333; /* Set text color */
   cursor: pointer; /* Change cursor to pointer on hover */
-  padding: 10px; /* Add some padding */
-  margin: 5px; /* Add some margin */
-  border-radius: 5px; /* Rounded edges */
+  margin-top: 10px; /* Add some space above the button */
   transition: background-color 0.3s ease; /* Smooth transition for hover effect */
  }
+ 
+ .new-tag-btn:hover {
+  background-color: #e0e0e0; /* Slightly darker grey background on hover */
+ }
+
+ .color-selector .no-color-button {
+  position: relative;
+  background-color: black; /* Black background */
+  border-radius: 50%; /* Circle shape */
+  width: 20px;
+  height: 20px;
+  border: none;
+  padding: 0;
+ }
+ 
+ .color-selector .no-color-button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  height: 2px;
+  background-color: white; /* White slash */
+  transform: translate(-50%, -50%) rotate(45deg);
+ }
+
+ .color-selector button {
+  margin: 5px; /* Add space between buttons */
+  border: 1px solid #ccc; /* Default button border */
+  /* Other styles remain the same */
+ }
+ .color-selector-button:hover {
+  transform: scale(1.5); /* Increase the size by 10% */
+  transition: transform 0.2s ease; /* Smooth transition */
+ }
+
+
+ .custom-delete-button:hover {
+  background-color: #f6b1b1;
+ }
+
 
 .settings-component {
   height: 80px; /* Fixed height */
   width: 100%;
   display: flex; /* Ensure it's a flex container */
-  justify-content: center; /* Center buttons horizontally */
-  align-items: center; /* Center buttons vertically */
+  flex-direction: column;
+  /* justify-content: center; */
+  /* align-items: center;  */
+  overflow-y: auto;
+  padding-bottom: 20px;
+ }
+.logout-btn {
+  width: 40%;
+  margin-left: 30%;
+  /* justify-content: center;
+  align-items: center;  */
+ 
+ }
+
+ .settings-header {
+  font-size: 14px; /* Adjust based on your design */
+  font-weight: bold; /* Make the text bold */
+  color: #252525; /* Use a dark color for the text */
+  padding: 10px 15px; /* Add some padding */
+  background-color: #f4ef9f; /* Light grey background to match the sidebar */
+  border-bottom: 1px solid #ccc; /* Add a subtle border at the bottom */
+  margin-bottom: 10px; /* Add some space below the header */
  }
 
 
@@ -150,14 +291,63 @@ width: 100%;
 
 /* ClipItemList */
 .clipitemlist {
-flex: 50%; /* Takes up 1/2 of the Explorer-component's width */
+flex: 65%; /* Takes up 1/2 of the Explorer-component's width */
 display: flex; /* Ensure it's a flex container */
+flex-direction: row;
 overflow-y: auto; /* Enable scrolling if content overflows */
 /* margin-right: 10px; */
 }
+
+.clipitemlist-component {
+  width: 100%;
+  padding-left: 0;
+}
+
+.clipitemlist-title {
+  display: flex;
+  align-items: center; /* Center items vertically */
+  justify-content: space-between; /* Space out the title and ID */
+  font-size: 14px; /* Adjust based on your design */
+  font-weight: bold; /* Make the text bold */
+  color: #252525; /* Use a dark color for the text */
+  padding: 10px 15px; /* Adjust padding as needed */
+  background-color: #f0f0f0; /* Light grey background to match the sidebar */
+  border-bottom: 1px solid #ccc; /* Add a subtle border at the bottom */
+  margin-bottom: 10px; /* Add some space below the title */
+ }
+
+ .clipitemcard-component {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 10px;
+  margin: 5px 0;
+  background-color: #f0f0f0; /* Light grey background */
+  border-radius: 5px;
+ }
+ 
+ /* Alternate background color for every other item */
+ .clipitemcard-component:nth-child(even) {
+  background-color: #e0e0e0; /* Slightly darker grey */
+ }
+ 
+ .clipitemcard-component.empty {
+  background-color: #f0f0f0; /* Light grey background for empty rows */
+ }
+ 
+ .clipitemcard-component.empty:nth-child(even) {
+  background-color: #e0e0e0; /* Slightly darker grey for empty rows */
+ }
+
+
+
+
+
+
+
 /* Preview */
 .preview {
-flex: 50%; /* Takes up 1/2 of the Explorer's width */
+flex: 35%; /* Takes up 1/2 of the Explorer's width */
 display: flex; /* Ensure it's a flex container */
 overflow-y: auto; /* Enable scrolling if content overflows */
 }
@@ -174,14 +364,17 @@ width: 100%;
 
 .controls-component {
 display: flex;
+flex-direction: column;
 width: 100%;
+justify-content: center;
+  align-items: center; 
 }
 
 
 
 /* Controls */
 .controls {
-  height: 80px; /* Fixed height */
+  height: 300px; /* Fixed height */
   width: 100%;
   display: flex; /* Ensure it's a flex container */
   justify-content: center; /* Center buttons horizontally */
@@ -195,10 +388,12 @@ width: 100%;
   border: none; /* Remove default border */
   color: #333; /* Set text color */
   cursor: pointer; /* Change cursor to pointer on hover */
-  padding: 10px; /* Add some padding */
-  margin: 5px; /* Add some margin */
+  padding: 15px 20px; /* Add some padding */
+  margin: 10px; /* Add some margin */
   border-radius: 5px; /* Rounded edges */
   transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  height: auto;
+  font-size: 18px;
  }
 
 /* Hide buttons by default and show on hover */
@@ -207,9 +402,22 @@ width: 100%;
   } */
 
 /* Change background color on hover */
-.controls-component button:hover {
+.show-update-tag-button:hover {
   background-color: #f0f0f0; /* Light grey background on hover */
  }
+.copy-clip-item-btn:hover {
+  background-color: #98ecf8; /* Light grey background on hover */
+ }
+.delete-clip-item-btn:hover {
+  background-color: #f6b1b1; /* Light grey background on hover */
+ }
+
+.assign-tag-menu {
+  flex-grow: 1;
+}
+
+
+
 
 /* DisplayPreview */
 .displaypreview {
@@ -233,12 +441,12 @@ overflow-y: auto; /* Enable scrolling if content overflows */
 
 
 .edit-img {
-width: 10px;
-height: 10px;
+width: 18px;
+height: 18px;
 }
 .unedit-img {
-width: 10px;
-height: 10px;
+width: 18px;
+height: 18px;
 }
 .delete-img {
 width: 10px;
@@ -252,15 +460,15 @@ border-radius: 5px;
 }
 
 .message.success {
-background-color: #dff0d8; /* Light green */
-color: #3c763d; /* Dark green */
+background-color: #dff0d8; 
+color: #3c763d; 
 }
 
 .message.error {
-background-color: #f2dede; /* Light red */
-color: #a94442; /* Dark red */
+background-color: #f2dede; 
+color: #a94442; 
 }
 
 .tagcard-component.selected {
-background-color: #f0f0f0; /* Example background color for selected state */
+background-color: #f0f0f0; 
 }
